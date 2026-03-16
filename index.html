@@ -1,160 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Amdavadi Paws | Premium Pet Hub Ahmedabad</title>
+<title>Amdavadi Paws | Premium Pet Hostel & Shop</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 body{font-family:Arial}
-.cart-sidebar{transition:0.4s}
-.cart-open{transform:translateX(0)}
-.cart-closed{transform:translateX(100%)}
 </style>
 
 </head>
 
 <body class="bg-gray-50">
 
+
 <!-- NAVBAR -->
-<nav class="fixed top-0 w-full bg-white shadow z-50">
+
+<nav class="bg-white shadow fixed w-full top-0 z-50">
+
 <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-<div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
-<i data-lucide="dog" class="text-orange-500"></i>
-<b class="text-xl">Amdavadi Paws</b>
-</div>
+<h1 class="text-xl font-bold text-orange-500">Amdavadi Paws 🐾</h1>
 
-<div class="flex gap-6">
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('hostel')">Hostel & Daycare</button>
-<button onclick="showPage('shop')">Shop</button>
-<button onclick="showPage('ai')">AI Diet</button>
-</div>
+<div class="space-x-6">
 
-<button onclick="toggleCart(true)">
-<i data-lucide="shopping-cart"></i>
-</button>
+<a href="#hostel">Hostel</a>
+<a href="#shop">Shop</a>
+<a href="#contact">Contact</a>
 
 </div>
+
+</div>
+
 </nav>
 
 
-<!-- HOME -->
-<!-- HERO SECTION -->
-<section class="relative bg-gradient-to-br from-orange-50 via-white to-teal-50 py-24">
 
-<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center px-6">
+<!-- HERO HEADER -->
+
+<section class="pt-24 bg-gradient-to-r from-orange-50 to-teal-50">
+
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center p-10">
 
 <div>
 
-<span class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-bold">
-Ahmedabad's Trusted Pet Care
-</span>
-
-<h1 class="text-5xl md:text-6xl font-extrabold text-teal-950 mt-6 leading-tight">
-Luxury Stay & Premium Supplies
-for your <span class="text-orange-500">Furry Family</span>
+<h1 class="text-5xl font-bold mb-6">
+Luxury Stay for Your Pets 🐶
 </h1>
 
-<p class="text-slate-600 mt-6 text-lg">
-Cage-free hostel, daycare, grooming and premium pet supplies in Ahmedabad.
+<p class="text-gray-600 mb-6">
+Premium pet hostel and daycare with cage-free stay, play area and daily updates.
 </p>
 
-<div class="flex gap-4 mt-8">
-
-<button onclick="openBooking('Hostel')"
-class="bg-teal-700 text-white px-8 py-4 rounded-2xl font-bold hover:bg-teal-800">
-
+<button onclick="openBooking('Hostel')" 
+class="bg-orange-500 text-white px-6 py-3 rounded mr-4">
 Book Hostel
 </button>
 
-<button onclick="showPage('shop')"
-class="border-2 border-teal-700 text-teal-700 px-8 py-4 rounded-2xl font-bold">
-
-Browse Shop
+<button onclick="openBooking('Daycare')" 
+class="bg-teal-600 text-white px-6 py-3 rounded">
+Book Daycare
 </button>
-
-</div>
 
 </div>
 
 <div>
 
 <img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?w=900"
-class="rounded-[40px] shadow-2xl">
+class="rounded-3xl shadow-lg">
 
 </div>
 
 </div>
 
 </section>
-<section class="py-20 bg-white">
 
-<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 px-6 text-center">
 
-<div class="p-8 bg-slate-50 rounded-3xl">
 
-<h3 class="font-bold text-xl mb-3">Cage Free Stay</h3>
-<p class="text-slate-500">Comfortable AC rooms for your pets.</p>
+<!-- FEATURES -->
+
+<section class="py-16 bg-white">
+
+<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
+
+<div class="p-6 bg-gray-50 rounded-xl">
+
+<h3 class="font-bold text-xl mb-2">Cage Free Stay</h3>
+
+<p>Safe and comfortable boarding.</p>
 
 </div>
 
-<div class="p-8 bg-slate-50 rounded-3xl">
+<div class="p-6 bg-gray-50 rounded-xl">
 
-<h3 class="font-bold text-xl mb-3">Daily Updates</h3>
-<p class="text-slate-500">WhatsApp photos & videos.</p>
+<h3 class="font-bold text-xl mb-2">Daily Updates</h3>
+
+<p>Photos and videos via WhatsApp.</p>
 
 </div>
 
-<div class="p-8 bg-slate-50 rounded-3xl">
+<div class="p-6 bg-gray-50 rounded-xl">
 
-<h3 class="font-bold text-xl mb-3">Vet On Call</h3>
-<p class="text-slate-500">Emergency care anytime.</p>
+<h3 class="font-bold text-xl mb-2">Vet Support</h3>
+
+<p>Emergency care available.</p>
 
 </div>
 
 </div>
 
 </section>
-page-hostel
-<!-- HOSTEL -->
-<section id="page-hostel" class="hidden pt-28 max-w-6xl mx-auto">
+
+
+
+<!-- HOSTEL SECTION -->
+
+<section id="hostel" class="py-20">
 
 <h2 class="text-3xl font-bold text-center mb-10">
-Luxury Boarding & Daycare
+Pet Boarding Services
 </h2>
 
-<div class="grid md:grid-cols-2 gap-8">
+<div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
 
-<div class="bg-white p-6 rounded shadow">
+<div class="bg-white p-8 rounded-xl shadow">
 
-<h3 class="text-xl font-bold mb-2">Pawsome Daycare</h3>
+<h3 class="text-xl font-bold mb-3">Pet Daycare</h3>
 
-<p class="mb-4">₹399 per day</p>
+<p class="mb-4">₹399 / Day</p>
 
-<button onclick="openBooking('Daycare')"
+<button onclick="openBooking('Daycare')" 
 class="bg-orange-500 text-white px-6 py-3 rounded w-full">
-Book Daycare
+Book Now
 </button>
 
 </div>
 
 
-<div class="bg-white p-6 rounded shadow">
+<div class="bg-white p-8 rounded-xl shadow">
 
-<h3 class="text-xl font-bold mb-2">Overnight Hostel</h3>
+<h3 class="text-xl font-bold mb-3">Overnight Hostel</h3>
 
-<p class="mb-4">₹799 per night</p>
+<p class="mb-4">₹799 / Night</p>
 
-<button onclick="openBooking('Overnight Hostel')"
+<button onclick="openBooking('Hostel')" 
 class="bg-teal-600 text-white px-6 py-3 rounded w-full">
-Book Overnight Stay
+Book Now
 </button>
 
 </div>
@@ -162,63 +157,37 @@ Book Overnight Stay
 </div>
 
 </section>
-<section class="py-20 bg-slate-50">
 
-<div class="max-w-7xl mx-auto px-6">
 
-<h2 class="text-4xl font-extrabold text-center text-teal-900 mb-12">
+
+<!-- SHOP PRODUCTS -->
+
+<section id="shop" class="py-20 bg-gray-100">
+
+<h2 class="text-3xl font-bold text-center mb-12">
 Popular Pet Products
 </h2>
 
 <div id="product-container"
-class="grid grid-cols-2 md:grid-cols-4 gap-8"></div>
+class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-6">
 
 </div>
-
-</section>
-
-
-<!-- SHOP -->
-<section id="page-shop" class="hidden pt-28 max-w-6xl mx-auto">
-
-<h2 class="text-3xl font-bold mb-10 text-center">Pet Shop</h2>
-
-<div id="product-container" class="grid md:grid-cols-4 gap-6"></div>
-
-</section>
-
-
-<!-- AI DIET -->
-<section id="page-ai" class="hidden pt-28 max-w-xl mx-auto">
-
-<h2 class="text-3xl font-bold mb-6 text-center">
-AI Pet Diet Planner
-</h2>
-
-<input id="petBreed" placeholder="Pet Breed"
-class="border p-3 w-full mb-3">
-
-<input id="petDetails" placeholder="Age / Weight"
-class="border p-3 w-full mb-3">
-
-<button onclick="getAIDiet()"
-class="bg-orange-500 text-white px-6 py-3 w-full rounded">
-Generate Diet
-</button>
-
-<div id="aiText" class="mt-6 text-gray-700"></div>
 
 </section>
 
 
 
 <!-- BOOKING POPUP -->
+
 <div id="bookingPopup"
-style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;">
+style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.6);align-items:center;justify-content:center;">
 
-<div class="bg-white p-6 rounded w-96">
+<div class="bg-white p-6 rounded-xl w-80">
 
-<h2 class="text-xl font-bold mb-4">Book Pet Service</h2>
+<h2 class="text-xl font-bold mb-4">
+Book Pet Service
+</h2>
 
 <input id="ownerName" placeholder="Your Name"
 class="border p-2 w-full mb-2">
@@ -229,208 +198,118 @@ class="border p-2 w-full mb-2">
 <input id="bookingDate" type="date"
 class="border p-2 w-full mb-4">
 
-<select id="serviceType"
-class="border p-2 w-full mb-4">
-<option>Daycare</option>
-<option>Overnight Hostel</option>
-</select>
-
 <button onclick="sendBooking()"
 class="bg-orange-500 text-white w-full p-3 rounded">
 Send via WhatsApp
 </button>
 
 <button onclick="closeBooking()"
-class="mt-2 border w-full p-2 rounded">
+class="border w-full p-2 mt-2 rounded">
 Cancel
 </button>
 
 </div>
+
 </div>
 
 
 
 <!-- FLOATING WHATSAPP -->
+
 <a href="https://wa.me/919930330051"
-style="position:fixed;bottom:25px;right:25px;background:#25D366;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;color:white">
+style="position:fixed;bottom:20px;right:20px;background:#25D366;
+width:60px;height:60px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:28px;color:white">
+
 💬
+
 </a>
 
 
 
 <script>
 
-lucide.createIcons()
-
 const WHATSAPP="919930330051"
-
-function showPage(page){
-document.querySelectorAll("section").forEach(s=>s.classList.add("hidden"))
-document.getElementById("page-"+page).classList.remove("hidden")
-window.scrollTo(0,0)
-}
-
-
-
-let selectedService=""
 
 function openBooking(service){
 
-selectedService=service
-
-document.getElementById("serviceType").value=service
-
 document.getElementById("bookingPopup").style.display="flex"
+
 }
 
 function closeBooking(){
+
 document.getElementById("bookingPopup").style.display="none"
+
 }
-
-
 
 function sendBooking(){
 
 const owner=document.getElementById("ownerName").value
 const pet=document.getElementById("petName").value
 const date=document.getElementById("bookingDate").value
-const service=document.getElementById("serviceType").value
-
-if(!owner||!pet||!date){
-alert("Please fill all details")
-return
-}
 
 const message=`Hello Amdavadi Paws 🐾
 
 Booking Request
 
-Owner Name: ${owner}
-Pet Name: ${pet}
-Service: ${service}
-Date: ${date}
+Owner: ${owner}
+Pet: ${pet}
+Date: ${date}`
 
-Please confirm availability.`
-
-const url=`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`
-
-window.open(url)
-
-closeBooking()
+window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`)
 
 }
 
 
 
 const products=[
-const PRODUCT_DB = [
 
-{ id:1,name:"Premium Dog Kibble",price:1499,img:"https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400"},
+{name:"Dog Food",price:999,img:"https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400"},
+{name:"Pet Bed",price:1999,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"},
+{name:"Rope Toy",price:399,img:"https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400"},
+{name:"Pet Shampoo",price:499,img:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"},
 
-{ id:2,name:"Orthopedic Pet Bed",price:2499,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"},
+{name:"Grain Free Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
+{name:"Cat Toy",price:199,img:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400"},
+{name:"Pet Fountain",price:3200,img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400"},
+{name:"Grooming Kit",price:1850,img:"https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=400"},
 
-{ id:3,name:"Dog Rope Toy",price:399,img:"https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400"},
+{name:"Dog Bone",price:249,img:"https://images.unsplash.com/photo-1558944351-c5d3f9f7d5c5?w=400"},
+{name:"Travel Bag",price:1999,img:"https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=400"},
+{name:"Dog Collar",price:499,img:"https://images.unsplash.com/photo-1601758064136-5e3d45f0f9f2?w=400"},
+{name:"Cat Litter Box",price:1800,img:"https://images.unsplash.com/photo-1583511655826-05700442b31b?w=400"},
 
-{ id:4,name:"Pet Shampoo Natural",price:550,img:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"},
+{name:"Cooling Mat",price:999,img:"https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=400"},
+{name:"Pet Brush",price:350,img:"https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=400"},
+{name:"Pet Hoodie",price:799,img:"https://images.unsplash.com/photo-1583512603806-077998240c7a?w=400"},
+{name:"Dog Bowl",price:450,img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400"}
 
-{ id:5,name:"Grain Free Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
-
-{ id:6,name:"Cat Teaser Toy",price:199,img:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400"},
-
-{ id:7,name:"Water Fountain",price:3200,img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400"},
-
-{ id:8,name:"Pet Grooming Kit",price:1850,img:"https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=400"},
-
-{ id:9,name:"Dog Chew Bone",price:249,img:"https://images.unsplash.com/photo-1558944351-c5d3f9f7d5c5?w=400"},
-
-{ id:10,name:"Pet Travel Bag",price:1999,img:"https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=400"},
-
-{ id:11,name:"Dog Collar Premium",price:499,img:"https://images.unsplash.com/photo-1601758064136-5e3d45f0f9f2?w=400"},
-
-{ id:12,name:"Cat Litter Box",price:1800,img:"https://images.unsplash.com/photo-1583511655826-05700442b31b?w=400"},
-
-{ id:13,name:"Pet Cooling Mat",price:999,img:"https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=400"},
-
-{ id:14,name:"Pet Brush",price:350,img:"https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=400"},
-
-{ id:15,name:"Pet Hoodie",price:799,img:"https://images.unsplash.com/photo-1583512603806-077998240c7a?w=400"},
-
-{ id:16,name:"Dog Food Bowl",price:450,img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400"}
-
-];
-function renderProducts(){
+]
 
 const container=document.getElementById("product-container")
 
 container.innerHTML=products.map(p=>`
 
-<div class="bg-white p-4 rounded shadow">
+<div class="bg-white p-4 rounded-xl shadow">
 
-<img src="${p.img}" class="h-40 w-full object-cover mb-2">
+<img src="${p.img}" class="h-40 w-full object-cover mb-3 rounded">
 
 <h3 class="font-bold">${p.name}</h3>
 
-<p class="text-orange-500 font-bold">₹${p.price}</p>
+<p class="text-orange-500 font-bold mb-2">₹${p.price}</p>
+
+<button class="bg-teal-600 text-white px-4 py-2 rounded w-full">
+Buy Now
+</button>
 
 </div>
 
 `).join("")
 
-}
-
-renderProducts()
-
-
-
-async function getAIDiet(){
-
-const breed=document.getElementById("petBreed").value
-const details=document.getElementById("petDetails").value
-
-document.getElementById("aiText").innerText=
-"Diet recommendation for "+breed+" ("+details+") will appear here."
-
-}
-<section class="py-20 bg-white">
-
-<div class="max-w-6xl mx-auto text-center">
-
-<h2 class="text-4xl font-extrabold text-teal-900 mb-12">
-Loved by Pet Parents
-</h2>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="p-6 bg-slate-50 rounded-3xl">
-⭐⭐⭐⭐⭐
-<p class="mt-3 text-slate-600">
-Best hostel in Ahmedabad. My Labrador loved it.
-</p>
-<b class="block mt-3">– Priya S</b>
-</div>
-
-<div class="p-6 bg-slate-50 rounded-3xl">
-⭐⭐⭐⭐⭐
-<p class="mt-3 text-slate-600">
-Daily updates made me stress free.
-</p>
-<b class="block mt-3">– Rahul P</b>
-</div>
-
-<div class="p-6 bg-slate-50 rounded-3xl">
-⭐⭐⭐⭐⭐
-<p class="mt-3 text-slate-600">
-Great service and premium products.
-</p>
-<b class="block mt-3">– Sneha K</b>
-</div>
-
-</div>
-
-</div>
-
-</section>
 </script>
 
 </body>
+
 </html>
