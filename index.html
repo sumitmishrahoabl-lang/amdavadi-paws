@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Amdavadi Paws | Premium Pet Hostel & Shop</title>
+<title>Amdavadi Paws | Premium Pet Hub</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-
-<style>
-body{font-family:Arial}
-</style>
+<script src="https://unpkg.com/lucide@latest"></script>
 
 </head>
 
-<body class="bg-gray-50">
+<body class="bg-slate-50">
 
 
 <!-- NAVBAR -->
 
-<nav class="bg-white shadow fixed w-full top-0 z-50">
+<nav class="fixed top-0 w-full bg-white shadow z-50">
 
 <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-<h1 class="text-xl font-bold text-orange-500">Amdavadi Paws 🐾</h1>
+<div class="flex items-center gap-2 cursor-pointer">
+<i data-lucide="dog" class="text-orange-500"></i>
+<b class="text-xl">Amdavadi Paws</b>
+</div>
 
-<div class="space-x-6">
+<div class="flex gap-6">
 
-<a href="#hostel">Hostel</a>
-<a href="#shop">Shop</a>
-<a href="#contact">Contact</a>
+<a href="#hostel" class="hover:text-orange-500">Hostel</a>
+<a href="#shop" class="hover:text-orange-500">Shop</a>
+<a href="#diet" class="hover:text-orange-500">AI Diet</a>
 
 </div>
 
@@ -40,38 +40,50 @@ body{font-family:Arial}
 
 
 
-<!-- HERO HEADER -->
+<!-- HERO -->
 
-<section class="pt-24 bg-gradient-to-r from-orange-50 to-teal-50">
+<section class="pt-24 bg-gradient-to-br from-orange-50 via-white to-teal-50">
 
-<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center p-10">
+<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center px-6 py-16">
 
 <div>
 
-<h1 class="text-5xl font-bold mb-6">
-Luxury Stay for Your Pets 🐶
+<h1 class="text-5xl font-extrabold text-teal-900 leading-tight">
+
+Luxury Stay for your <span class="text-orange-500">Furry Family</span>
+
 </h1>
 
-<p class="text-gray-600 mb-6">
-Premium pet hostel and daycare with cage-free stay, play area and daily updates.
+<p class="text-slate-600 mt-6 text-lg">
+
+Ahmedabad's trusted pet hostel, daycare and premium pet store.
+
 </p>
 
-<button onclick="openBooking('Hostel')" 
-class="bg-orange-500 text-white px-6 py-3 rounded mr-4">
-Book Hostel
-</button>
+<div class="flex gap-4 mt-8">
 
 <button onclick="openBooking('Daycare')" 
-class="bg-teal-600 text-white px-6 py-3 rounded">
+class="bg-orange-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-orange-600">
+
 Book Daycare
+
 </button>
+
+<button onclick="openBooking('Hostel')" 
+class="bg-teal-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-teal-800">
+
+Book Overnight Stay
+
+</button>
+
+</div>
 
 </div>
 
 <div>
 
 <img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?w=900"
-class="rounded-3xl shadow-lg">
+class="rounded-[30px] shadow-xl">
 
 </div>
 
@@ -85,30 +97,21 @@ class="rounded-3xl shadow-lg">
 
 <section class="py-16 bg-white">
 
-<div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-10 text-center">
+<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 px-6 text-center">
 
-<div class="p-6 bg-gray-50 rounded-xl">
-
-<h3 class="font-bold text-xl mb-2">Cage Free Stay</h3>
-
-<p>Safe and comfortable boarding.</p>
-
+<div class="p-8 bg-slate-50 rounded-3xl">
+<h3 class="font-bold text-xl mb-3">Cage Free Stay</h3>
+<p class="text-slate-500">Comfortable and safe environment.</p>
 </div>
 
-<div class="p-6 bg-gray-50 rounded-xl">
-
-<h3 class="font-bold text-xl mb-2">Daily Updates</h3>
-
-<p>Photos and videos via WhatsApp.</p>
-
+<div class="p-8 bg-slate-50 rounded-3xl">
+<h3 class="font-bold text-xl mb-3">Daily Updates</h3>
+<p class="text-slate-500">Photos and videos on WhatsApp.</p>
 </div>
 
-<div class="p-6 bg-gray-50 rounded-xl">
-
-<h3 class="font-bold text-xl mb-2">Vet Support</h3>
-
-<p>Emergency care available.</p>
-
+<div class="p-8 bg-slate-50 rounded-3xl">
+<h3 class="font-bold text-xl mb-3">Vet On Call</h3>
+<p class="text-slate-500">Emergency care anytime.</p>
 </div>
 
 </div>
@@ -117,39 +120,43 @@ class="rounded-3xl shadow-lg">
 
 
 
-<!-- HOSTEL SECTION -->
+<!-- HOSTEL -->
 
 <section id="hostel" class="py-20">
 
-<h2 class="text-3xl font-bold text-center mb-10">
-Pet Boarding Services
+<h2 class="text-4xl font-bold text-center text-teal-900 mb-12">
+Hostel & Daycare
 </h2>
 
-<div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
+<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6">
 
-<div class="bg-white p-8 rounded-xl shadow">
+<div class="bg-white p-8 rounded-3xl shadow">
 
 <h3 class="text-xl font-bold mb-3">Pet Daycare</h3>
 
-<p class="mb-4">₹399 / Day</p>
+<p class="mb-4 text-slate-500">₹399 per day</p>
 
 <button onclick="openBooking('Daycare')" 
-class="bg-orange-500 text-white px-6 py-3 rounded w-full">
-Book Now
+class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold">
+
+Book Daycare
+
 </button>
 
 </div>
 
 
-<div class="bg-white p-8 rounded-xl shadow">
+<div class="bg-white p-8 rounded-3xl shadow">
 
-<h3 class="text-xl font-bold mb-3">Overnight Hostel</h3>
+<h3 class="text-xl font-bold mb-3">Overnight Stay</h3>
 
-<p class="mb-4">₹799 / Night</p>
+<p class="mb-4 text-slate-500">₹799 per night</p>
 
 <button onclick="openBooking('Hostel')" 
-class="bg-teal-600 text-white px-6 py-3 rounded w-full">
-Book Now
+class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold">
+
+Book Overnight Stay
+
 </button>
 
 </div>
@@ -160,12 +167,12 @@ Book Now
 
 
 
-<!-- SHOP PRODUCTS -->
+<!-- SHOP -->
 
-<section id="shop" class="py-20 bg-gray-100">
+<section id="shop" class="py-20 bg-slate-100">
 
-<h2 class="text-3xl font-bold text-center mb-12">
-Popular Pet Products
+<h2 class="text-4xl font-bold text-center text-teal-900 mb-12">
+Popular Products
 </h2>
 
 <div id="product-container"
@@ -177,17 +184,46 @@ class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-6">
 
 
 
+<!-- AI DIET -->
+
+<section id="diet" class="py-20">
+
+<div class="max-w-xl mx-auto text-center">
+
+<h2 class="text-4xl font-bold text-teal-900 mb-6">
+AI Pet Diet Planner
+</h2>
+
+<input id="petBreed" placeholder="Pet Breed"
+class="border p-3 w-full mb-3 rounded">
+
+<input id="petDetails" placeholder="Age / Weight"
+class="border p-3 w-full mb-3 rounded">
+
+<button onclick="generateDiet()"
+class="bg-orange-500 text-white px-6 py-3 rounded w-full">
+
+Generate Diet
+
+</button>
+
+<div id="dietResult" class="mt-6 text-slate-600"></div>
+
+</div>
+
+</section>
+
+
+
 <!-- BOOKING POPUP -->
 
 <div id="bookingPopup"
 style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.6);align-items:center;justify-content:center;">
+background:rgba(0,0,0,0.6);align-items:center;justify-content:center">
 
 <div class="bg-white p-6 rounded-xl w-80">
 
-<h2 class="text-xl font-bold mb-4">
-Book Pet Service
-</h2>
+<h2 class="text-xl font-bold mb-4">Book Service</h2>
 
 <input id="ownerName" placeholder="Your Name"
 class="border p-2 w-full mb-2">
@@ -200,12 +236,16 @@ class="border p-2 w-full mb-4">
 
 <button onclick="sendBooking()"
 class="bg-orange-500 text-white w-full p-3 rounded">
+
 Send via WhatsApp
+
 </button>
 
 <button onclick="closeBooking()"
 class="border w-full p-2 mt-2 rounded">
+
 Cancel
+
 </button>
 
 </div>
@@ -217,10 +257,10 @@ Cancel
 <!-- FLOATING WHATSAPP -->
 
 <a href="https://wa.me/919930330051"
-style="position:fixed;bottom:20px;right:20px;background:#25D366;
+style="position:fixed;bottom:25px;right:25px;background:#25D366;
 width:60px;height:60px;border-radius:50%;
 display:flex;align-items:center;justify-content:center;
-font-size:28px;color:white">
+font-size:30px;color:white">
 
 💬
 
@@ -230,9 +270,13 @@ font-size:28px;color:white">
 
 <script>
 
+lucide.createIcons()
+
 const WHATSAPP="919930330051"
 
-function openBooking(service){
+
+
+function openBooking(){
 
 document.getElementById("bookingPopup").style.display="flex"
 
@@ -244,13 +288,15 @@ document.getElementById("bookingPopup").style.display="none"
 
 }
 
+
+
 function sendBooking(){
 
 const owner=document.getElementById("ownerName").value
 const pet=document.getElementById("petName").value
 const date=document.getElementById("bookingDate").value
 
-const message=`Hello Amdavadi Paws 🐾
+const message=`Hello Amdavadi Paws
 
 Booking Request
 
@@ -270,17 +316,14 @@ const products=[
 {name:"Pet Bed",price:1999,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"},
 {name:"Rope Toy",price:399,img:"https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400"},
 {name:"Pet Shampoo",price:499,img:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"},
-
-{name:"Grain Free Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
+{name:"Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
 {name:"Cat Toy",price:199,img:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400"},
 {name:"Pet Fountain",price:3200,img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400"},
 {name:"Grooming Kit",price:1850,img:"https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=400"},
-
 {name:"Dog Bone",price:249,img:"https://images.unsplash.com/photo-1558944351-c5d3f9f7d5c5?w=400"},
 {name:"Travel Bag",price:1999,img:"https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=400"},
 {name:"Dog Collar",price:499,img:"https://images.unsplash.com/photo-1601758064136-5e3d45f0f9f2?w=400"},
 {name:"Cat Litter Box",price:1800,img:"https://images.unsplash.com/photo-1583511655826-05700442b31b?w=400"},
-
 {name:"Cooling Mat",price:999,img:"https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=400"},
 {name:"Pet Brush",price:350,img:"https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=400"},
 {name:"Pet Hoodie",price:799,img:"https://images.unsplash.com/photo-1583512603806-077998240c7a?w=400"},
@@ -292,15 +335,15 @@ const container=document.getElementById("product-container")
 
 container.innerHTML=products.map(p=>`
 
-<div class="bg-white p-4 rounded-xl shadow">
+<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition">
 
-<img src="${p.img}" class="h-40 w-full object-cover mb-3 rounded">
+<img src="${p.img}" class="h-40 w-full object-cover mb-3 rounded-xl">
 
 <h3 class="font-bold">${p.name}</h3>
 
 <p class="text-orange-500 font-bold mb-2">₹${p.price}</p>
 
-<button class="bg-teal-600 text-white px-4 py-2 rounded w-full">
+<button class="bg-teal-700 text-white px-4 py-2 rounded w-full">
 Buy Now
 </button>
 
@@ -308,8 +351,19 @@ Buy Now
 
 `).join("")
 
+
+
+function generateDiet(){
+
+const breed=document.getElementById("petBreed").value
+
+document.getElementById("dietResult").innerText=
+"Diet suggestion for "+breed+" will appear here."
+
+}
+
 </script>
 
-</body>
 
+</body>
 </html>
