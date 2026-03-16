@@ -1,320 +1,155 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Dog, 
-  Menu, 
-  X, 
-  ShoppingCart,
-  CheckCircle2,
-  ChevronRight,
-  Sparkles,
-  Instagram,
-  Facebook
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amdavadi Paws | Pet Hostel & Shop Ahmedabad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
 
-// Product Data
-const PRODUCTS = [
-  { id: 1, name: 'Premium Dog Kibble (Adult)', price: '₹2,499', image: 'https://images.unsplash.com/photo-1589924691995-400dc9ceb709?auto=format&fit=crop&q=80&w=400', category: 'Food' },
-  { id: 2, name: 'Interactive Cat Teaser', price: '₹349', image: 'https://images.unsplash.com/photo-1545249390-6bdfa286032f?auto=format&fit=crop&q=80&w=400', category: 'Toys' },
-  { id: 3, name: 'Orthopedic Dog Bed', price: '₹1,899', image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=400', category: 'Accessories' },
-  { id: 4, name: 'Grain-Free Puppy Treats', price: '₹450', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=400', category: 'Treats' },
-  { id: 5, name: 'Reflective Dog Harness', price: '₹899', image: 'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=400', category: 'Accessories' },
-  { id: 6, name: 'Cat Scratching Post', price: '₹1,299', image: 'https://images.unsplash.com/photo-1591806336026-f825d72071a2?auto=format&fit=crop&q=80&w=400', category: 'Toys' },
-  { id: 7, name: 'Grooming Brush Set', price: '₹550', image: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=400', category: 'Grooming' },
-  { id: 8, name: 'Automatic Water Fountain', price: '₹2,100', image: 'https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&q=80&w=400', category: 'Accessories' }
-];
-
-export default function App() {
-  const [activeTab, setActiveTab] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [dietResult, setDietResult] = useState('');
-  
-  // AI States
-  const [petType, setPetType] = useState('Dog');
-  const [petBreed, setPetBreed] = useState('');
-  const [petDetails, setPetDetails] = useState('');
-  const [shopFilter, setShopFilter] = useState('All');
-
-  const WHATSAPP_NUMBER = "919930330051"; 
-
-  const generateDiet = async () => {
-    if (!petBreed || !petDetails) return;
-    setLoading(true);
-    setDietResult('');
-    
-    // CRITICAL: Handled by environment
-    const apiKey = ""; 
-    
-    const systemPrompt = "You are an expert veterinary nutritionist. Provide clear, concise, homemade diet advice for pets in India using local ingredients like curd, rice, boiled chicken, etc.";
-    const userPrompt = `Create a healthy, homemade diet plan for a ${petType} (${petBreed}) that is ${petDetails}. Include portion sizes and ingredients to avoid.`;
-
-    let retries = 0;
-    const maxRetries = 5;
-
-    const fetchAIResponse = async () => {
-      try {
-        // Updated to use gemini-1.5-flash for better stability
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: userPrompt }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-          })
-        });
-
-        if (!response.ok) throw new Error("API Request Failed");
-        
-        const data = await response.json();
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        setDietResult(text || "Sorry, I couldn't generate a plan right now.");
-        setLoading(false);
-      } catch (err) {
-        if (retries < maxRetries) {
-          retries++;
-          const delay = Math.pow(2, retries) * 1000;
-          setTimeout(fetchAIResponse, delay);
-        } else {
-          setLoading(false);
-          setDietResult("I'm having trouble connecting to the AI. Please ensure your environment is set up correctly.");
-        }
-      }
-    };
-
-    fetchAIResponse();
-  };
-
-  const NavItem = ({ id, label }) => (
-    <button 
-      onClick={() => { setActiveTab(id); setIsMenuOpen(false); }}
-      className={`px-3 py-2 rounded-md font-medium transition-colors ${
-        activeTab === id ? 'text-orange-600 bg-orange-50' : 'text-gray-700 hover:text-orange-500'
-      }`}
-    >
-      {label}
-    </button>
-  );
-
-  return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans selection:bg-orange-100">
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center cursor-pointer" onClick={() => setActiveTab('home')}>
-              <Dog className="h-8 w-8 text-orange-600 mr-2" />
-              <span className="font-bold text-2xl text-teal-900">Amdavadi Paws</span>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i data-lucide="dog" class="text-orange-500 w-8 h-8"></i>
+                <span class="font-extrabold text-2xl text-teal-900">Amdavadi Paws</span>
             </div>
-
-            <div className="hidden md:flex items-center space-x-6">
-              <NavItem id="home" label="Home" />
-              <NavItem id="hostel" label="Hostel & Daycare" />
-              <NavItem id="shop" label="Shop" />
-              <NavItem id="diet" label="AI Diet" />
-              
-              <div className="relative p-2 bg-gray-50 rounded-full cursor-pointer hover:bg-gray-100 transition">
-                <ShoppingCart className="h-6 w-6 text-teal-800" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartCount}
-                  </span>
-                )}
-              </div>
+            <div class="hidden md:flex gap-8 font-semibold text-slate-600">
+                <a href="#hostel" class="hover:text-orange-500 transition">Hostel</a>
+                <a href="#shop" class="hover:text-orange-500 transition">Shop</a>
+                <a href="#ai-diet" class="hover:text-orange-500 transition">AI Diet Plan</a>
             </div>
-
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-teal-900">
-              {isMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
+            <button class="bg-teal-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-teal-700 transition">Book Stay</button>
         </div>
+    </nav>
 
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t p-4 space-y-4 shadow-xl">
-            <button onClick={() => {setActiveTab('home'); setIsMenuOpen(false)}} className="block w-full text-left py-2 font-medium">Home</button>
-            <button onClick={() => {setActiveTab('hostel'); setIsMenuOpen(false)}} className="block w-full text-left py-2 font-medium">Hostel</button>
-            <button onClick={() => {setActiveTab('shop'); setIsMenuOpen(false)}} className="block w-full text-left py-2 font-medium">Shop</button>
-            <button onClick={() => {setActiveTab('diet'); setIsMenuOpen(false)}} className="block w-full text-left py-2 font-medium">AI Diet</button>
-          </div>
-        )}
-      </nav>
-
-      {/* Main Sections */}
-      <main className="pt-20">
-        {activeTab === 'home' && (
-          <section className="bg-orange-50 py-20 lg:py-32">
-            <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-5xl lg:text-7xl font-extrabold text-teal-950 leading-tight mb-6">
-                  Luxury Pet Care in <span className="text-orange-600">Ahmedabad</span>
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 bg-gradient-to-b from-orange-50 to-white">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-bold">#1 Pet Hostel in Ahmedabad</span>
+                <h1 class="text-5xl md:text-6xl font-extrabold text-teal-900 mt-6 leading-tight">
+                    Safe Haven for your <span class="text-orange-500">Amdavadi</span> Pets
                 </h1>
-                <p className="text-xl text-gray-600 mb-8">
-                  The city's finest boarding, daycare, and pet supplies. Because your paws deserve a vacation too!
+                <p class="text-lg text-slate-600 mt-6 mb-8">
+                    Going for a trip from Sardar Vallabhbhai Patel Airport? Drop your furry friends at our premium, cage-free facility in Bodakdev.
                 </p>
-                <div className="flex gap-4">
-                  <button onClick={() => setActiveTab('hostel')} className="bg-teal-800 text-white px-8 py-4 rounded-2xl font-bold hover:bg-teal-900 transition flex items-center shadow-lg">
-                    Book Stay <ChevronRight className="ml-2 h-5 w-5" />
-                  </button>
-                  <button onClick={() => setActiveTab('diet')} className="bg-white text-teal-900 border-2 border-teal-100 px-8 py-4 rounded-2xl font-bold hover:bg-teal-50 transition">
-                    Try AI Diet
-                  </button>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#hostel" class="bg-teal-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-teal-200">Our Services</a>
+                    <a href="#ai-diet" class="bg-white border-2 border-teal-600 text-teal-600 px-8 py-4 rounded-2xl font-bold">Free AI Diet Plan</a>
                 </div>
-              </div>
-              <div className="relative h-[400px] lg:h-[500px]">
-                <img 
-                  src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800" 
-                  className="w-full h-full object-cover rounded-[3rem] shadow-2xl"
-                  alt="Pet care"
-                />
-              </div>
             </div>
-          </section>
-        )}
-
-        {activeTab === 'hostel' && (
-          <section className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4">
-              <h2 className="text-4xl font-bold text-teal-950 text-center mb-12">Hostel & Daycare Plans</h2>
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-teal-50 p-10 rounded-[2rem] border border-teal-100">
-                  <h3 className="text-2xl font-bold mb-2">Pawsome Daycare</h3>
-                  <p className="text-gray-500 mb-6">8 AM - 8 PM. Supervised play and socializing.</p>
-                  <div className="text-4xl font-black text-teal-900 mb-8">₹399 <span className="text-sm font-normal text-gray-400">/day</span></div>
-                  <ul className="space-y-4 mb-8">
-                    {['AC Play Zone', 'Supervised Socialization', 'Hourly Updates'].map(item => (
-                      <li key={item} className="flex items-center gap-3"><CheckCircle2 className="text-teal-600 h-5 w-5"/> {item}</li>
-                    ))}
-                  </ul>
-                  <button className="w-full py-4 bg-teal-800 text-white rounded-2xl font-bold">Book Daycare</button>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800" class="rounded-[40px] shadow-2xl border-8 border-white" alt="Happy Dogs">
+                <div class="absolute -bottom-6 -left-6 glass-card p-6 rounded-3xl shadow-xl flex items-center gap-4">
+                    <div class="bg-orange-500 p-3 rounded-full text-white"><i data-lucide="shield-check"></i></div>
+                    <div><p class="font-bold">24/7 Care</p><p class="text-xs text-slate-500">Vet on call always</p></div>
                 </div>
-                <div className="bg-teal-900 text-white p-10 rounded-[2rem] shadow-2xl">
-                  <h3 className="text-2xl font-bold mb-2 text-orange-400">Overnight Hostel</h3>
-                  <p className="text-teal-200 mb-6">Luxury suites and personalized 24/7 care.</p>
-                  <div className="text-4xl font-black mb-8 text-white">₹799 <span className="text-sm font-normal text-teal-300">/night</span></div>
-                  <ul className="space-y-4 mb-8">
-                    {['Individual AC Suites', 'Fresh Home-cooked Meals', '24/7 Caretaker'].map(item => (
-                      <li key={item} className="flex items-center gap-3"><CheckCircle2 className="text-orange-400 h-5 w-5"/> {item}</li>
-                    ))}
-                  </ul>
-                  <button className="w-full py-4 bg-orange-600 text-white rounded-2xl font-bold">Book Overnight Stay</button>
-                </div>
-              </div>
             </div>
-          </section>
-        )}
-
-        {activeTab === 'shop' && (
-          <section className="py-20 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
-                <h2 className="text-4xl font-bold text-teal-950">Premium Pet Shop</h2>
-                <div className="flex gap-2">
-                  {['All', 'Food', 'Toys', 'Accessories'].map(cat => (
-                    <button 
-                      key={cat}
-                      onClick={() => setShopFilter(cat)}
-                      className={`px-4 py-2 rounded-full text-sm font-bold ${shopFilter === cat ? 'bg-teal-800 text-white' : 'bg-white border text-teal-800'}`}
-                    >
-                      {cat}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                {PRODUCTS.filter(p => shopFilter === 'All' || p.category === shopFilter).map(product => (
-                  <div key={product.id} className="bg-white p-4 rounded-3xl shadow-sm hover:shadow-lg transition">
-                    <img src={product.image} className="w-full aspect-square object-cover rounded-2xl mb-4" />
-                    <h4 className="font-bold text-teal-950 truncate">{product.name}</h4>
-                    <div className="flex justify-between items-center mt-4">
-                      <span className="font-black text-orange-600">{product.price}</span>
-                      <button onClick={() => setCartCount(c => c+1)} className="p-2 bg-gray-100 rounded-lg hover:bg-orange-600 hover:text-white transition">
-                        <ShoppingCart className="h-4 w-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {activeTab === 'diet' && (
-          <section className="py-20 bg-teal-950 min-h-screen">
-            <div className="max-w-2xl mx-auto px-4">
-              <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 lg:p-12">
-                <div className="text-center mb-10">
-                  <Sparkles className="h-10 w-10 text-orange-500 mx-auto mb-4" />
-                  <h2 className="text-3xl font-bold text-teal-950">AI Diet Planner</h2>
-                  <p className="text-gray-500">Custom nutrition using Indian homemade ingredients.</p>
-                </div>
-                
-                <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-gray-400">PET TYPE</label>
-                      <select 
-                        value={petType} onChange={e => setPetType(e.target.value)}
-                        className="w-full p-4 bg-gray-50 rounded-xl border-none outline-none focus:ring-2 ring-orange-400"
-                      >
-                        <option>Dog</option>
-                        <option>Cat</option>
-                      </select>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-gray-400">BREED</label>
-                      <input 
-                        type="text" value={petBreed} onChange={e => setPetBreed(e.target.value)}
-                        placeholder="e.g. Indie" className="w-full p-4 bg-gray-50 rounded-xl border-none outline-none focus:ring-2 ring-orange-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-gray-400">AGE & WEIGHT</label>
-                    <input 
-                      type="text" value={petDetails} onChange={e => setPetDetails(e.target.value)}
-                      placeholder="e.g. 2 years, 15kg" className="w-full p-4 bg-gray-50 rounded-xl border-none outline-none focus:ring-2 ring-orange-400"
-                    />
-                  </div>
-
-                  <button 
-                    onClick={generateDiet}
-                    disabled={loading || !petBreed}
-                    className="w-full py-5 bg-orange-600 text-white rounded-2xl font-black text-lg hover:bg-orange-700 disabled:opacity-50 transition"
-                  >
-                    {loading ? 'Analyzing...' : 'Generate Plan'}
-                  </button>
-
-                  {dietResult && (
-                    <div className="mt-8 p-6 bg-orange-50 rounded-2xl border border-orange-100 animate-in fade-in duration-700">
-                      <div className="flex items-center gap-2 mb-4 text-teal-900 font-bold">
-                        <CheckCircle2 className="text-green-600" /> AI Recommended Diet
-                      </div>
-                      <p className="text-gray-700 leading-relaxed whitespace-pre-wrap text-sm">
-                        {dietResult}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
-      </main>
-
-      {/* Footer */}
-      <footer className="bg-white py-12 border-t">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center">
-            <Dog className="h-6 w-6 text-orange-600 mr-2" />
-            <span className="font-bold text-xl text-teal-950">Amdavadi Paws</span>
-          </div>
-          <p className="text-gray-400 text-sm">Bodakdev, Ahmedabad. Care with Love.</p>
-          <div className="flex gap-6">
-            <Instagram className="text-teal-900 cursor-pointer" />
-            <Facebook className="text-teal-900 cursor-pointer" />
-          </div>
         </div>
-      </footer>
-    </div>
-  );
-}
+    </section>
+
+    <!-- AI Diet Planner Feature -->
+    <section id="ai-diet" class="py-20 bg-teal-900 text-white overflow-hidden relative">
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-6">Free Gemini AI Pet Diet Planner</h2>
+            <p class="text-teal-100 mb-10 italic">Get a customized Indian meal plan based on your pet's breed and age.</p>
+            
+            <div class="bg-white p-8 rounded-[32px] text-slate-900 shadow-2xl">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="text-left">
+                        <label class="font-bold text-sm ml-2">Pet Breed (e.g. Indie, Lab, Golden)</label>
+                        <input id="petBreed" type="text" placeholder="Enter Breed" class="w-full mt-2 p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-orange-500 transition">
+                    </div>
+                    <div class="text-left">
+                        <label class="font-bold text-sm ml-2">Pet Age</label>
+                        <input id="petAge" type="text" placeholder="e.g. 2 years" class="w-full mt-2 p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-orange-500 transition">
+                    </div>
+                </div>
+                <button onclick="generateDiet()" id="genBtn" class="w-full bg-orange-500 text-white font-bold py-4 rounded-2xl hover:bg-orange-600 transition flex justify-center items-center gap-2">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i> Generate Plan with Gemini AI
+                </button>
+                
+                <!-- Result Box -->
+                <div id="resultBox" class="hidden mt-8 text-left p-6 bg-orange-50 border border-orange-100 rounded-2xl">
+                    <h4 class="font-bold text-orange-600 flex items-center gap-2 mb-3">
+                        <i data-lucide="check-circle"></i> AI Generated Plan:
+                    </h4>
+                    <p id="dietResult" class="text-slate-700 leading-relaxed whitespace-pre-line"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 text-center border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-center items-center gap-2 mb-6">
+                <i data-lucide="dog" class="text-orange-500"></i>
+                <span class="font-bold text-white text-xl">Amdavadi Paws</span>
+            </div>
+            <p>Sindhu Bhavan Road, Ahmedabad | +91 98765 43210</p>
+            <p class="mt-4 text-sm">&copy; 2024 Amdavadi Paws. Built for local pet lovers.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Gemini API Configuration
+        const apiKey = "AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w"; // The key is handled by the environment or set by you later
+
+        async function generateDiet() {
+            const breed = document.getElementById('petBreed').value;
+            const age = document.getElementById('petAge').value;
+            const btn = document.getElementById('genBtn');
+            const resultBox = document.getElementById('resultBox');
+            const dietResult = document.getElementById('dietResult');
+
+            if(!breed || !age) {
+                alert("Please fill in both fields!");
+                return;
+            }
+
+            btn.innerHTML = "Consulting AI...";
+            btn.disabled = true;
+
+            const prompt = `You are a pet nutritionist in India. Create a simple daily meal plan for a ${age} old ${breed} pet. 
+            Suggest healthy Indian foods like curd, rice, eggs, or vegetables. 
+            Format the response with bullet points for Breakfast, Lunch, and Dinner. 
+            Mention one tip specific to the Ahmedabad climate.`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
+
+                dietResult.innerText = text;
+                resultBox.classList.remove('hidden');
+            } catch (error) {
+                dietResult.innerText = "Sorry, the AI is busy right now. Please try again in a minute!";
+                resultBox.classList.remove('hidden');
+            } finally {
+                btn.innerHTML = `<i data-lucide="sparkles" class="w-5 h-5"></i> Generate Plan with Gemini AI`;
+                btn.disabled = false;
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>
