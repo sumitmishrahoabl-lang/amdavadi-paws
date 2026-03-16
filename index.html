@@ -225,7 +225,7 @@
 
     <script>
         // --- KEYS (FILL THESE IN) ---
-        const API_KEY_GEMINI = "AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w"; // 
+        const _KEY_GEMINI = "AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w"; // 
         const RAZORPAY_KEY_ID = "rzp_test_SRqlvR52ecD25D"; // 
 
         // EXPANDED PRODUCT DB
@@ -335,8 +335,8 @@
             const type = document.getElementById('petType').value;
             const details = document.getElementById('petDetails').value;
             
-            if(!API_KEY_GEMINI) {
-                return alert("ERROR: Please enter your Gemini API Key in the <script> section of the code.");
+            if(!_KEY_GEMINI) {
+                return alert("ERROR: Please enter your Gemini API Key in the <AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w> section of the code.");
             }
             if(!breed) return alert("Please enter the breed name.");
             
