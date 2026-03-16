@@ -72,7 +72,7 @@
         <section class="max-w-7xl mx-auto px-4 pb-20">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-extrabold text-teal-950 mb-4">Luxury Boarding & Daycare</h2>
-                <p class="text-slate-600">Cage-free, AC rooms, and 24/7 care near Sindhu Bhavan Road.</p>
+                <p class="text-slate-600">Cage-free, AC rooms, and 24/7 care near New Chandkheda.</p>
             </div>
             
             <!-- Service Toggle Styles -->
@@ -225,8 +225,9 @@
 
     <script>
         // --- KEYS (FILL THESE IN) ---
-        const _KEY_GEMINI = "AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w"; // 
-        const RAZORPAY_KEY_ID = "rzp_test_SRqlvR52ecD25D"; // 
+        const _KEY_GEMINI = "AIzaSyCpvTinyRYetv5zNWsyibZB5n1-ThefY1w";
+        const RAZORPAY_KEY_ID = "rzp_test_SRqlvR52ecD25D"; 
+        const WHATSAPP_NUMBER = "919930330051";
 
         // EXPANDED PRODUCT DB
         const PRODUCT_DB = [
@@ -246,6 +247,12 @@
             lucide.createIcons();
             renderProducts();
         };
+        // Function for WhatsApp Redirection
+        function contactWhatsApp(service) {
+            const message = `Hello Amdavadi Paws! I am interested in booking your ${service} service for my pet. Could you please share availability and details?`;
+            const url = `https://wa.me/${9930330051}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
 
         function showPage(pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
