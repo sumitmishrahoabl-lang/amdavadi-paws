@@ -1,3 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amdavadi Paws | Premium Pet Hub Ahmedabad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
+        .cart-sidebar { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; }
+        .cart-open { transform: translateX(0); }
+        .cart-closed { transform: translateX(100%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); }
+        .gradient-text { background: linear-gradient(to right, #0d9488, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tab-active { border-bottom: 2px solid #f97316; color: #f97316; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 glass-nav border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('home')">
+                <i data-lucide="dog" class="text-orange-500 w-8 h-8"></i>
+                <span class="font-extrabold text-2xl text-teal-900 tracking-tight">Amdavadi Paws</span>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <button onclick="showPage('home')" class="nav-link font-semibold text-slate-600 hover:text-orange-500 transition">Home</button>
+                <button onclick="showPage('hostel')" class="nav-link font-semibold text-slate-600 hover:text-orange-500 transition">Hostel & Daycare</button>
+                <button onclick="showPage('shop')" class="nav-link font-semibold text-slate-600 hover:text-orange-500 transition">Shop</button>
+                <button onclick="showPage('ai')" class="nav-link font-semibold text-slate-600 hover:text-orange-500 transition">AI Diet</button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart(true)" class="relative p-3 bg-white border border-slate-200 rounded-2xl text-teal-900 hover:shadow-md transition">
+                    <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-orange-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full ring-2 ring-white">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+
 import React, { useState, useEffect } from 'react';
 import { 
   Dog, 
@@ -47,7 +94,7 @@ export default function App() {
   const [petDetails, setPetDetails] = useState('');
   const [shopFilter, setShopFilter] = useState('All');
 
-  const WHATSAPP_NUMBER = "91XXXXXXXXXX"; 
+  const WHATSAPP_NUMBER = "919930330051"; 
 
   const generateDiet = async () => {
     if (!petBreed || !petDetails) return;
