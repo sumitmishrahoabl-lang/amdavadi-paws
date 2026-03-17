@@ -5,7 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Amdavadi Paws | Premium Pet Hub</title>
+<title>Amdavadi Paws | Pet Hostel & Shop Ahmedabad</title>
+
+<meta name="description" content="Best pet hostel, daycare and pet shop in Ahmedabad. Book pet stay and shop premium products.">
+<meta name="keywords" content="pet hostel Ahmedabad, dog boarding Ahmedabad, pet shop Ahmedabad">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
@@ -24,6 +27,7 @@
 <a href="#hostel">Hostel</a>
 <a href="#shop">Shop</a>
 <a href="#reviews">Reviews</a>
+<a href="#admin">Admin</a>
 </div>
 
 <button onclick="toggleCart(true)">
@@ -35,91 +39,39 @@
 
 
 <!-- HERO -->
-<section class="pt-24 bg-gradient-to-br from-orange-50 to-teal-50">
+<section class="pt-24 bg-gradient-to-br from-orange-50 to-teal-50 p-10 text-center">
 
-<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center p-10">
-
-<div>
-<h1 class="text-5xl font-bold mb-4">
-Luxury Stay for Your Pets 🐶
-</h1>
-
-<p class="text-gray-600 mb-6">
-Premium daycare & hostel with love and care.
-</p>
+<h1 class="text-5xl font-bold mb-4">Luxury Stay for Your Pets 🐶</h1>
 
 <button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded">
 Book Now
 </button>
-</div>
-
-<div>
-<img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?w=900"
-class="rounded-3xl shadow-lg">
-</div>
-
-</div>
 
 </section>
 
 
 <!-- HOSTEL -->
-<section id="hostel" class="py-16">
+<section id="hostel" class="py-16 text-center">
 
-<h2 class="text-3xl font-bold text-center mb-10">Hostel & Daycare</h2>
+<h2 class="text-3xl font-bold mb-8">Hostel & Daycare</h2>
 
-<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6">
-
-<!-- DAYCARE -->
-<div class="bg-white rounded-2xl shadow hover:shadow-xl transition">
-
-<img src="https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=800"
-class="h-56 w-full object-cover rounded-t-2xl">
-
-<div class="p-6 text-center">
-
-<h3 class="text-xl font-bold mb-2">Daycare</h3>
-<p class="mb-4 text-gray-600">₹399 per day</p>
-
-<button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded w-full">
-Book Daycare
+<button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded m-2">
+Daycare ₹399
 </button>
 
-</div>
-
-</div>
-
-
-<!-- HOSTEL -->
-<div class="bg-white rounded-2xl shadow hover:shadow-xl transition">
-
-<img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800"
-class="h-56 w-full object-cover rounded-t-2xl">
-
-<div class="p-6 text-center">
-
-<h3 class="text-xl font-bold mb-2">Overnight Stay</h3>
-<p class="mb-4 text-gray-600">₹799 per night</p>
-
-<button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded w-full">
-Book Overnight
+<button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded m-2">
+Overnight ₹799
 </button>
-
-</div>
-
-</div>
-
-</div>
 
 </section>
 
 
 <!-- SHOP -->
-<section id="shop" class="py-20 bg-gray-100">
+<section id="shop" class="py-20">
 
 <h2 class="text-3xl font-bold text-center mb-10">Pet Shop</h2>
 
-<div id="products" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-6"></div>
+<div id="products" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto"></div>
 
 </section>
 
@@ -131,25 +83,31 @@ Book Overnight
 
 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
 
-<div class="p-6 bg-gray-50 rounded shadow">
-⭐⭐⭐⭐⭐
-<p>Best hostel in Ahmedabad.</p>
-<b>- Priya</b>
-</div>
-
-<div class="p-6 bg-gray-50 rounded shadow">
-⭐⭐⭐⭐⭐
-<p>Very caring staff.</p>
-<b>- Rahul</b>
-</div>
-
-<div class="p-6 bg-gray-50 rounded shadow">
-⭐⭐⭐⭐⭐
-<p>My pet loved it.</p>
-<b>- Sneha</b>
-</div>
+<div class="p-6 bg-gray-50 rounded">⭐⭐⭐⭐⭐<p>Best hostel in Ahmedabad.</p><b>- Priya</b></div>
+<div class="p-6 bg-gray-50 rounded">⭐⭐⭐⭐⭐<p>Very caring staff.</p><b>- Rahul</b></div>
+<div class="p-6 bg-gray-50 rounded">⭐⭐⭐⭐⭐<p>My pet loved it.</p><b>- Sneha</b></div>
 
 </div>
+
+</section>
+
+
+<!-- ADMIN PANEL -->
+<section id="admin" class="py-20 bg-gray-100 text-center">
+
+<h2 class="text-3xl font-bold mb-6">Admin Panel</h2>
+
+<input id="pName" placeholder="Product Name" class="border p-2 m-1">
+<input id="pPrice" placeholder="Price" class="border p-2 m-1">
+<input id="pImg" placeholder="Image URL" class="border p-2 m-1">
+
+<br>
+
+<button onclick="addProduct()" class="bg-green-500 text-white px-4 py-2 rounded m-2">
+Add Product
+</button>
+
+<div id="adminList" class="mt-6"></div>
 
 </section>
 
@@ -177,6 +135,7 @@ Pay Now
 
 <input id="name" placeholder="Your Name" class="border p-2 mb-2"><br>
 <input id="pet" placeholder="Pet Name" class="border p-2 mb-2"><br>
+<input id="date" type="date" class="border p-2 mb-2"><br>
 
 <button onclick="sendBooking()" class="bg-green-500 text-white p-2 rounded">
 Send WhatsApp
@@ -189,86 +148,87 @@ Send WhatsApp
 
 <script>
 
-const RAZORPAY_KEY = "rzp_test_SRqlvR52ecD25D"
+const RAZORPAY_KEY="rzp_test_SRqlvR52ecD25D"
 
-const products = [
+let products = JSON.parse(localStorage.getItem("products")) || [
 
 {name:"Dog Food",price:999,img:"https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400"},
-{name:"Pet Bed",price:1999,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"},
-{name:"Toy Rope",price:399,img:"https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400"},
-{name:"Shampoo",price:499,img:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"},
-
-{name:"Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
-{name:"Cat Toy",price:199,img:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400"},
-{name:"Fountain",price:3200,img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400"},
-{name:"Grooming Kit",price:1850,img:"https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=400"},
-
-{name:"Bone",price:249,img:"https://images.unsplash.com/photo-1558944351-c5d3f9f7d5c5?w=400"},
-{name:"Bag",price:1999,img:"https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=400"},
-{name:"Collar",price:499,img:"https://images.unsplash.com/photo-1601758064136-5e3d45f0f9f2?w=400"},
-{name:"Litter",price:1800,img:"https://images.unsplash.com/photo-1583511655826-05700442b31b?w=400"},
-
-{name:"Cooling Mat",price:999,img:"https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=400"},
-{name:"Brush",price:350,img:"https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=400"},
-{name:"Hoodie",price:799,img:"https://images.unsplash.com/photo-1583512603806-077998240c7a?w=400"},
-{name:"Bowl",price:450,img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400"}
+{name:"Pet Bed",price:1999,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"}
 
 ]
 
 let cart=[]
 
 function renderProducts(){
+
 document.getElementById("products").innerHTML = products.map((p,i)=>
-`<div class="bg-white p-4 rounded-xl shadow hover:shadow-xl transition">
+
+`<div class="bg-white p-4 rounded shadow">
 <img src="${p.img}" class="h-32 w-full object-cover mb-2 rounded">
-<h3 class="font-bold">${p.name}</h3>
+<h3>${p.name}</h3>
 <p>₹${p.price}</p>
-<button onclick="addToCart(${i})" class="bg-teal-600 text-white p-2 mt-2 w-full rounded">
-Add to Cart
-</button>
-</div>`).join("")
+<button onclick="addToCart(${i})" class="bg-teal-600 text-white p-2 mt-2 w-full rounded">Add</button>
+</div>`
+
+).join("")
+
+renderAdmin()
+
 }
 
 function addToCart(i){
-cart.push(products[i])
+
+let found=cart.find(c=>c.name===products[i].name)
+
+if(found){found.qty++}
+else{cart.push({...products[i],qty:1})}
+
 updateCart()
+
 }
 
 function updateCart(){
-document.getElementById("cartCount").innerText = cart.length
 
 let total=0
 
-document.getElementById("cartItems").innerHTML = cart.map(p=>{
-total+=p.price
-return `<p>${p.name} - ₹${p.price}</p>`
+document.getElementById("cartItems").innerHTML = cart.map((p,i)=>{
+
+total+=p.price*p.qty
+
+return `<div>
+${p.name} x ${p.qty}
+<button onclick="pInc(${i})">+</button>
+<button onclick="pDec(${i})">-</button>
+<button onclick="removeItem(${i})">❌</button>
+</div>`
+
 }).join("")
 
-document.getElementById("total").innerText = total
+document.getElementById("total").innerText=total
+document.getElementById("cartCount").innerText=cart.length
+
 }
 
+function pInc(i){cart[i].qty++;updateCart()}
+function pDec(i){if(cart[i].qty>1)cart[i].qty--;updateCart()}
+function removeItem(i){cart.splice(i,1);updateCart()}
+
 function toggleCart(open){
-document.getElementById("cart").style.right = open ? "0" : "-400px"
+document.getElementById("cart").style.right=open?"0":"-400px"
 }
 
 function checkout(){
 
-let total=cart.reduce((sum,p)=>sum+p.price,0)
+let total=cart.reduce((s,p)=>s+p.price*p.qty,0)
 
-const options = {
-key: RAZORPAY_KEY,
-amount: total*100,
-currency: "INR",
-name: "Amdavadi Paws",
-handler: function(){
-alert("Payment Successful!")
-cart=[]
-updateCart()
-toggleCart(false)
-}
-}
+new Razorpay({
+key:RAZORPAY_KEY,
+amount:total*100,
+currency:"INR",
+name:"Amdavadi Paws",
+handler:()=>{alert("Payment Success");cart=[];updateCart()}
+}).open()
 
-new Razorpay(options).open()
 }
 
 function openBooking(){
@@ -276,10 +236,49 @@ document.getElementById("popup").style.display="flex"
 }
 
 function sendBooking(){
-const name=document.getElementById("name").value
-const pet=document.getElementById("pet").value
 
-window.open(`https://wa.me/919930330051?text=Booking for ${name}, Pet ${pet}`)
+const n=document.getElementById("name").value
+const p=document.getElementById("pet").value
+const d=document.getElementById("date").value
+
+window.open(`https://wa.me/919930330051?text=Booking for ${n}, Pet ${p}, Date ${d}`)
+
+}
+
+function addProduct(){
+
+let p={
+name:document.getElementById("pName").value,
+price:parseInt(document.getElementById("pPrice").value),
+img:document.getElementById("pImg").value
+}
+
+products.push(p)
+
+localStorage.setItem("products",JSON.stringify(products))
+
+renderProducts()
+
+}
+
+function deleteProduct(i){
+
+products.splice(i,1)
+
+localStorage.setItem("products",JSON.stringify(products))
+
+renderProducts()
+
+}
+
+function renderAdmin(){
+
+document.getElementById("adminList").innerHTML = products.map((p,i)=>
+
+`<div>${p.name} ₹${p.price} <button onclick="deleteProduct(${i})">Delete</button></div>`
+
+).join("")
+
 }
 
 renderProducts()
