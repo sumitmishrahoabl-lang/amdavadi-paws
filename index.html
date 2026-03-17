@@ -8,362 +8,228 @@
 <title>Amdavadi Paws | Premium Pet Hub</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 </head>
 
 <body class="bg-slate-50">
 
-
 <!-- NAVBAR -->
-
 <nav class="fixed top-0 w-full bg-white shadow z-50">
-
 <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
 
-<div class="flex items-center gap-2 cursor-pointer">
-<i data-lucide="dog" class="text-orange-500"></i>
-<b class="text-xl">Amdavadi Paws</b>
-</div>
+<h1 class="font-bold text-xl text-orange-500">Amdavadi Paws 🐾</h1>
 
 <div class="flex gap-6">
-
-<a href="#hostel" class="hover:text-orange-500">Hostel</a>
-<a href="#shop" class="hover:text-orange-500">Shop</a>
-<a href="#diet" class="hover:text-orange-500">AI Diet</a>
-
+<a href="#hostel">Hostel</a>
+<a href="#shop">Shop</a>
+<a href="#reviews">Reviews</a>
 </div>
 
-</div>
+<button onclick="toggleCart(true)">
+🛒 <span id="cartCount">0</span>
+</button>
 
+</div>
 </nav>
 
 
-
 <!-- HERO -->
+<section class="pt-24 bg-gradient-to-br from-orange-50 to-teal-50 p-10 text-center">
 
-<section class="pt-24 bg-gradient-to-br from-orange-50 via-white to-teal-50">
-
-<div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center px-6 py-16">
-
-<div>
-
-<h1 class="text-5xl font-extrabold text-teal-900 leading-tight">
-
-Luxury Stay for your <span class="text-orange-500">Furry Family</span>
-
+<h1 class="text-5xl font-bold mb-4">
+Luxury Stay for Your Pets 🐶
 </h1>
 
-<p class="text-slate-600 mt-6 text-lg">
-
-Ahmedabad's trusted pet hostel, daycare and premium pet store.
-
-</p>
-
-<div class="flex gap-4 mt-8">
-
-<button onclick="openBooking('Daycare')" 
-class="bg-orange-500 text-white px-8 py-4 rounded-xl font-bold hover:bg-orange-600">
-
-Book Daycare
-
+<button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded">
+Book Now
 </button>
 
-<button onclick="openBooking('Hostel')" 
-class="bg-teal-700 text-white px-8 py-4 rounded-xl font-bold hover:bg-teal-800">
-
-Book Overnight Stay
-
-</button>
-
-</div>
-
-</div>
-
-<div>
-
-<img src="https://images.unsplash.com/photo-1583512603806-077998240c7a?w=900"
-class="rounded-[30px] shadow-xl">
-
-</div>
-
-</div>
-
 </section>
-
-
-
-<!-- FEATURES -->
-
-<section class="py-16 bg-white">
-
-<div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10 px-6 text-center">
-
-<div class="p-8 bg-slate-50 rounded-3xl">
-<h3 class="font-bold text-xl mb-3">Cage Free Stay</h3>
-<p class="text-slate-500">Comfortable and safe environment.</p>
-</div>
-
-<div class="p-8 bg-slate-50 rounded-3xl">
-<h3 class="font-bold text-xl mb-3">Daily Updates</h3>
-<p class="text-slate-500">Photos and videos on WhatsApp.</p>
-</div>
-
-<div class="p-8 bg-slate-50 rounded-3xl">
-<h3 class="font-bold text-xl mb-3">Vet On Call</h3>
-<p class="text-slate-500">Emergency care anytime.</p>
-</div>
-
-</div>
-
-</section>
-
 
 
 <!-- HOSTEL -->
+<section id="hostel" class="py-16 text-center">
 
-<section id="hostel" class="py-20">
+<h2 class="text-3xl font-bold mb-8">Hostel & Daycare</h2>
 
-<h2 class="text-4xl font-bold text-center text-teal-900 mb-12">
-Hostel & Daycare
-</h2>
-
-<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 px-6">
-
-<div class="bg-white p-8 rounded-3xl shadow">
-
-<h3 class="text-xl font-bold mb-3">Pet Daycare</h3>
-
-<p class="mb-4 text-slate-500">₹399 per day</p>
-
-<button onclick="openBooking('Daycare')" 
-class="w-full bg-orange-500 text-white py-3 rounded-xl font-bold">
-
-Book Daycare
-
+<button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded m-2">
+Daycare ₹399
 </button>
 
-</div>
-
-
-<div class="bg-white p-8 rounded-3xl shadow">
-
-<h3 class="text-xl font-bold mb-3">Overnight Stay</h3>
-
-<p class="mb-4 text-slate-500">₹799 per night</p>
-
-<button onclick="openBooking('Hostel')" 
-class="w-full bg-teal-700 text-white py-3 rounded-xl font-bold">
-
-Book Overnight Stay
-
+<button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded m-2">
+Overnight ₹799
 </button>
-
-</div>
-
-</div>
 
 </section>
-
 
 
 <!-- SHOP -->
+<section id="shop" class="py-20">
 
-<section id="shop" class="py-20 bg-slate-100">
+<h2 class="text-3xl font-bold text-center mb-10">Pet Shop</h2>
 
-<h2 class="text-4xl font-bold text-center text-teal-900 mb-12">
-Popular Products
-</h2>
+<div id="products" class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto"></div>
 
-<div id="product-container"
-class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-6">
+</section>
+
+
+<!-- REVIEWS -->
+<section id="reviews" class="py-20 bg-white text-center">
+
+<h2 class="text-3xl font-bold mb-10">Loved by Pet Parents in Ahmedabad ❤️</h2>
+
+<div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+
+<div class="p-6 bg-gray-50 rounded">
+⭐⭐⭐⭐⭐
+<p>Best hostel in Ahmedabad. My dog loved it!</p>
+<b>- Priya, Satellite</b>
+</div>
+
+<div class="p-6 bg-gray-50 rounded">
+⭐⭐⭐⭐⭐
+<p>Daily updates were amazing. Highly recommended.</p>
+<b>- Rahul, Maninagar</b>
+</div>
+
+<div class="p-6 bg-gray-50 rounded">
+⭐⭐⭐⭐⭐
+<p>Clean and safe place for pets.</p>
+<b>- Sneha, Vastrapur</b>
+</div>
 
 </div>
 
 </section>
 
 
+<!-- CART -->
+<div id="cart" style="position:fixed;right:-400px;top:0;width:350px;height:100%;background:white;box-shadow:-5px 0 15px rgba(0,0,0,0.2);padding:20px;transition:0.3s">
 
-<!-- AI DIET -->
+<h2 class="text-xl font-bold mb-4">Your Cart</h2>
 
-<section id="diet" class="py-20">
+<div id="cartItems"></div>
 
-<div class="max-w-xl mx-auto text-center">
+<h3 class="mt-4 font-bold">Total: ₹<span id="total">0</span></h3>
 
-<h2 class="text-4xl font-bold text-teal-900 mb-6">
-AI Pet Diet Planner
-</h2>
-
-<input id="petBreed" placeholder="Pet Breed"
-class="border p-3 w-full mb-3 rounded">
-
-<input id="petDetails" placeholder="Age / Weight"
-class="border p-3 w-full mb-3 rounded">
-
-<button onclick="generateDiet()"
-class="bg-orange-500 text-white px-6 py-3 rounded w-full">
-
-Generate Diet
-
+<button onclick="checkout()" class="bg-orange-500 text-white w-full mt-4 p-3 rounded">
+Pay Now
 </button>
 
-<div id="dietResult" class="mt-6 text-slate-600"></div>
-
 </div>
-
-</section>
-
 
 
 <!-- BOOKING POPUP -->
+<div id="popup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;align-items:center;justify-content:center">
 
-<div id="bookingPopup"
-style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:rgba(0,0,0,0.6);align-items:center;justify-content:center">
+<div class="bg-white p-6 rounded">
 
-<div class="bg-white p-6 rounded-xl w-80">
+<input id="name" placeholder="Your Name" class="border p-2 mb-2"><br>
+<input id="pet" placeholder="Pet Name" class="border p-2 mb-2"><br>
 
-<h2 class="text-xl font-bold mb-4">Book Service</h2>
-
-<input id="ownerName" placeholder="Your Name"
-class="border p-2 w-full mb-2">
-
-<input id="petName" placeholder="Pet Name"
-class="border p-2 w-full mb-2">
-
-<input id="bookingDate" type="date"
-class="border p-2 w-full mb-4">
-
-<button onclick="sendBooking()"
-class="bg-orange-500 text-white w-full p-3 rounded">
-
-Send via WhatsApp
-
-</button>
-
-<button onclick="closeBooking()"
-class="border w-full p-2 mt-2 rounded">
-
-Cancel
-
+<button onclick="sendBooking()" class="bg-green-500 text-white p-2 rounded">
+Send WhatsApp
 </button>
 
 </div>
 
 </div>
-
-
-
-<!-- FLOATING WHATSAPP -->
-
-<a href="https://wa.me/919930330051"
-style="position:fixed;bottom:25px;right:25px;background:#25D366;
-width:60px;height:60px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:30px;color:white">
-
-💬
-
-</a>
-
 
 
 <script>
 
-lucide.createIcons()
+const RAZORPAY_KEY = "rzp_test_SRqlvR52ecD25D"
 
-const WHATSAPP="919930330051"
-
-
-
-function openBooking(){
-
-document.getElementById("bookingPopup").style.display="flex"
-
-}
-
-function closeBooking(){
-
-document.getElementById("bookingPopup").style.display="none"
-
-}
-
-
-
-function sendBooking(){
-
-const owner=document.getElementById("ownerName").value
-const pet=document.getElementById("petName").value
-const date=document.getElementById("bookingDate").value
-
-const message=`Hello Amdavadi Paws
-
-Booking Request
-
-Owner: ${owner}
-Pet: ${pet}
-Date: ${date}`
-
-window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message)}`)
-
-}
-
-
-
-const products=[
-
-{name:"Dog Food",price:999,img:"https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400"},
-{name:"Pet Bed",price:1999,img:"https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"},
-{name:"Rope Toy",price:399,img:"https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400"},
-{name:"Pet Shampoo",price:499,img:"https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400"},
-{name:"Treats",price:299,img:"https://images.unsplash.com/photo-1591768793355-74d7af236c1f?w=400"},
-{name:"Cat Toy",price:199,img:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400"},
-{name:"Pet Fountain",price:3200,img:"https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400"},
-{name:"Grooming Kit",price:1850,img:"https://images.unsplash.com/photo-1516733725897-1aa73b87c8e8?w=400"},
-{name:"Dog Bone",price:249,img:"https://images.unsplash.com/photo-1558944351-c5d3f9f7d5c5?w=400"},
-{name:"Travel Bag",price:1999,img:"https://images.unsplash.com/photo-1601758125946-6ec2ef64daf8?w=400"},
-{name:"Dog Collar",price:499,img:"https://images.unsplash.com/photo-1601758064136-5e3d45f0f9f2?w=400"},
-{name:"Cat Litter Box",price:1800,img:"https://images.unsplash.com/photo-1583511655826-05700442b31b?w=400"},
-{name:"Cooling Mat",price:999,img:"https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=400"},
-{name:"Pet Brush",price:350,img:"https://images.unsplash.com/photo-1598135753163-6167c1a1ad65?w=400"},
-{name:"Pet Hoodie",price:799,img:"https://images.unsplash.com/photo-1583512603806-077998240c7a?w=400"},
-{name:"Dog Bowl",price:450,img:"https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=400"}
-
+const products = [
+{name:"Dog Food",price:999},
+{name:"Pet Bed",price:1999},
+{name:"Toy",price:399},
+{name:"Shampoo",price:499},
+{name:"Treats",price:299},
+{name:"Cat Toy",price:199},
+{name:"Fountain",price:3200},
+{name:"Kit",price:1850},
+{name:"Bone",price:249},
+{name:"Bag",price:1999},
+{name:"Collar",price:499},
+{name:"Litter",price:1800},
+{name:"Mat",price:999},
+{name:"Brush",price:350},
+{name:"Hoodie",price:799},
+{name:"Bowl",price:450}
 ]
 
-const container=document.getElementById("product-container")
+let cart=[]
 
-container.innerHTML=products.map(p=>`
-
-<div class="bg-white p-4 rounded-2xl shadow hover:shadow-lg transition">
-
-<img src="${p.img}" class="h-40 w-full object-cover mb-3 rounded-xl">
-
-<h3 class="font-bold">${p.name}</h3>
-
-<p class="text-orange-500 font-bold mb-2">₹${p.price}</p>
-
-<button class="bg-teal-700 text-white px-4 py-2 rounded w-full">
-Buy Now
+function renderProducts(){
+document.getElementById("products").innerHTML = products.map((p,i)=>
+`<div class="bg-white p-4 rounded shadow">
+<h3>${p.name}</h3>
+<p>₹${p.price}</p>
+<button onclick="addToCart(${i})" class="bg-teal-600 text-white p-2 mt-2 w-full rounded">
+Add to Cart
 </button>
-
-</div>
-
-`).join("")
-
-
-
-function generateDiet(){
-
-const breed=document.getElementById("petBreed").value
-
-document.getElementById("dietResult").innerText=
-"Diet suggestion for "+breed+" will appear here."
-
+</div>`).join("")
 }
 
-</script>
+function addToCart(i){
+cart.push(products[i])
+updateCart()
+}
 
+function updateCart(){
+document.getElementById("cartCount").innerText = cart.length
+
+let total=0
+
+document.getElementById("cartItems").innerHTML = cart.map(p=>{
+total+=p.price
+return `<p>${p.name} - ₹${p.price}</p>`
+}).join("")
+
+document.getElementById("total").innerText = total
+}
+
+function toggleCart(open){
+document.getElementById("cart").style.right = open ? "0" : "-400px"
+}
+
+function checkout(){
+
+let total=cart.reduce((sum,p)=>sum+p.price,0)
+
+const options = {
+key: RAZORPAY_KEY,
+amount: total*100,
+currency: "INR",
+name: "Amdavadi Paws",
+description: "Pet Shop Purchase",
+handler: function(){
+alert("Payment Successful!")
+cart=[]
+updateCart()
+toggleCart(false)
+}
+}
+
+new Razorpay(options).open()
+}
+
+function openBooking(){
+document.getElementById("popup").style.display="flex"
+}
+
+function sendBooking(){
+const name=document.getElementById("name").value
+const pet=document.getElementById("pet").value
+
+window.open(`https://wa.me/919930330051?text=Booking for ${name}, Pet ${pet}`)
+}
+
+renderProducts()
+
+</script>
 
 </body>
 </html>
