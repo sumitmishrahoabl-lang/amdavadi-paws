@@ -108,7 +108,25 @@ class="rounded-3xl shadow-lg">
 
 <!-- ADMIN -->
 <section id="admin" class="py-20 bg-gray-100 text-center">
+
 <h2 class="text-3xl font-bold mb-6">Admin Panel</h2>
+
+<!-- LOGIN -->
+<div id="loginBox">
+
+<input id="adminEmail" placeholder="Email" class="border p-2 m-1">
+<input id="adminPass" type="password" placeholder="Password" class="border p-2 m-1">
+
+<br>
+
+<button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded m-2">
+Login
+</button>
+
+</div>
+
+<!-- ADMIN CONTROLS -->
+<div id="adminPanel" style="display:none;">
 
 <input id="pName" placeholder="Product Name" class="border p-2 m-1">
 <input id="pPrice" placeholder="Price" class="border p-2 m-1">
@@ -116,9 +134,13 @@ class="rounded-3xl shadow-lg">
 
 <br>
 
-<button onclick="addProduct()" class="bg-green-500 text-white px-4 py-2 rounded m-2">Add Product</button>
+<button onclick="addProduct()" class="bg-green-500 text-white px-4 py-2 rounded m-2">
+Add Product
+</button>
 
 <div id="adminList" class="mt-6"></div>
+
+</div>
 
 </section>
 
@@ -141,7 +163,12 @@ Pay Now
 <!-- BOOKING -->
 <div id="popup" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;align-items:center;justify-content:center">
 
-<div class="bg-white p-6 rounded">
+<div class="bg-white p-6 rounded relative">
+
+<button onclick="closeBooking()" 
+style="position:absolute;top:10px;right:10px;font-size:18px;">
+❌
+</button>
 
 <input id="name" placeholder="Your Name" class="border p-2 mb-2"><br>
 <input id="pet" placeholder="Pet Name" class="border p-2 mb-2"><br>
@@ -284,6 +311,28 @@ document.getElementById("adminList").innerHTML = products.map((p,i)=>
 renderProducts()
 
 </script>
-
+function closeBooking(){
+document.getElementById("popup").style.display="none"
+}
 </body>
 </html>
+const ADMIN_EMAIL = "summitmishra2202@gmail.com"
+const ADMIN_PASS = "Lodha@2202"
+
+function login(){
+
+let email = document.getElementById("adminEmail").value
+let pass = document.getElementById("adminPass").value
+
+if(email === ADMIN_EMAIL && pass === ADMIN_PASS){
+
+document.getElementById("loginBox").style.display = "none"
+document.getElementById("adminPanel").style.display = "block"
+
+renderAdmin()
+
+}else{
+alert("Wrong login details")
+}
+
+}
