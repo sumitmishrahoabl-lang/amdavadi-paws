@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amdavadi Paws | Luxury Pet Care & Shop Ahmedabad</title>
-    <meta name="description" content="The ultimate destination for pet boarding, daycare, and premium supplies in Ahmedabad.">
     
     <!-- External Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,9 +19,13 @@
         }
 
         .glass-nav {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+        }
+
+        #cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .product-card:hover img {
@@ -30,19 +33,15 @@
         }
 
         .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #e2e8f0;
             border-radius: 10px;
-        }
-
-        #cart-sidebar {
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="fixed top-0 w-full glass-nav border-b border-slate-200 z-[100]">
@@ -57,7 +56,7 @@
             <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
                 <a href="#hostel" class="hover:text-orange-600 transition">Hostel</a>
                 <a href="#shop" class="hover:text-orange-600 transition">Shop</a>
-                <a href="#reviews" class="hover:text-orange-600 transition">Reviews</a>
+                <a href="#contact" class="hover:text-orange-600 transition">Contact</a>
                 <a href="#admin" class="hover:text-orange-600 transition">Admin</a>
             </div>
 
@@ -74,25 +73,30 @@
     <section class="relative pt-32 pb-20 overflow-hidden bg-white">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
             <div class="z-10">
-                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-sm font-bold mb-4">#1 Pet Resort in Ahmedabad</span>
+                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-sm font-bold mb-4">📍 Tragad, Chandkheda, Ahmedabad</span>
                 <h1 class="text-6xl font-extrabold leading-[1.1] text-slate-900 mb-6">
                     Luxury Stay for Your <span class="text-orange-500 italic">Best Friend.</span>
                 </h1>
                 <p class="text-lg text-slate-600 mb-8 max-w-md">
-                    Experience peace of mind with our 24/7 supervised boarding, premium spa, and curated organic supplies.
+                    Ahmedabad's finest daycare & pet shop. We treat every guest like our own family.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <button onclick="openBooking()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition shadow-xl shadow-slate-200">
-                        Book a Stay
+                    <button onclick="openBooking()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition shadow-xl shadow-slate-200 flex items-center gap-2">
+                        <i data-lucide="calendar"></i> Book a Stay
                     </button>
-                    <a href="#shop" class="bg-white border-2 border-slate-100 text-slate-900 px-8 py-4 rounded-2xl font-bold hover:bg-slate-50 transition">
-                        Browse Shop
-                    </a>
                 </div>
             </div>
             <div class="relative">
-                <div class="absolute -top-10 -right-10 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-pulse"></div>
                 <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=1000" class="relative rounded-[3rem] shadow-2xl z-10 border-8 border-white">
+                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl z-20 border border-slate-100 hidden sm:block">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full text-green-600"><i data-lucide="shield-check"></i></div>
+                        <div>
+                            <p class="font-bold text-sm">Certified Care</p>
+                            <p class="text-xs text-slate-500">24/7 CCTV Monitoring</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -101,39 +105,31 @@
     <section id="hostel" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Professional Care Services</h2>
-                <p class="text-slate-500">Tailored experiences for every paw-sonality.</p>
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Boarding & Daycare</h2>
+                <p class="text-slate-500">Professional care while you're away.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                <!-- Daycare -->
-                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
-                    <div class="h-64 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-1 rounded-full font-bold text-teal-600">Daycare</div>
-                    </div>
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=800" class="w-full h-64 object-cover">
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold mb-2">Pawsome Daycare</h3>
-                        <p class="text-slate-500 mb-6">Socializing, exercise, and nap times from 8 AM to 8 PM.</p>
+                        <h3 class="text-2xl font-bold mb-2">Daycare</h3>
+                        <p class="text-slate-500 mb-6">Socializing, exercise, and basic grooming from 8 AM to 8 PM.</p>
                         <div class="flex items-center justify-between">
                             <span class="text-3xl font-black text-slate-900">₹399<span class="text-sm text-slate-400 font-normal">/day</span></span>
-                            <button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-teal-700">Book Now</button>
+                            <button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded-xl font-bold">Book</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Overnight -->
-                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100">
-                    <div class="h-64 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-4 py-1 rounded-full font-bold text-orange-600">Boarding</div>
-                    </div>
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800" class="w-full h-64 object-cover">
                     <div class="p-8">
-                        <h3 class="text-2xl font-bold mb-2">Overnight Luxury</h3>
-                        <p class="text-slate-500 mb-6">Cozy AC suites with home-cooked meals and 24/7 CCTV access.</p>
+                        <h3 class="text-2xl font-bold mb-2">Overnight Stay</h3>
+                        <p class="text-slate-500 mb-6">Personalized meal plans and cozy private sleeping areas.</p>
                         <div class="flex items-center justify-between">
                             <span class="text-3xl font-black text-slate-900">₹799<span class="text-sm text-slate-400 font-normal">/night</span></span>
-                            <button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600">Book Now</button>
+                            <button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold">Book</button>
                         </div>
                     </div>
                 </div>
@@ -144,194 +140,179 @@
     <!-- SHOP SECTION -->
     <section id="shop" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                <div>
-                    <h2 class="text-4xl font-extrabold text-slate-900 mb-4">The Paws Shop</h2>
-                    <p class="text-slate-500">Hand-picked premium supplies for your pets.</p>
-                </div>
-                <div class="flex bg-slate-100 p-1 rounded-2xl">
-                    <button class="px-6 py-2 bg-white rounded-xl shadow-sm font-bold text-orange-600">All Products</button>
-                </div>
-            </div>
-            
-            <div id="products" class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-12">The Paws Shop</h2>
+            <div id="products" class="grid grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Products dynamically loaded -->
             </div>
         </div>
     </section>
 
-    <!-- REVIEWS -->
-    <section id="reviews" class="py-24 bg-slate-900 text-white">
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-extrabold text-center mb-16">What Pet Parents Say</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <div class="flex text-orange-400 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-slate-300 mb-6 italic">"Amdavadi Paws is the only place I trust with my Labrador. He comes back happy every time!"</p>
-                    <div class="font-bold">Priya Sharma</div>
+            <div class="bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-12 text-white">
+                    <h2 class="text-4xl font-bold mb-8">Visit Our Store</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="map-pin"></i></div>
+                            <div>
+                                <p class="font-bold">Our Location</p>
+                                <p class="text-slate-400">Tragad, Chandkheda, Ahmedabad, Gujarat</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="phone"></i></div>
+                            <div>
+                                <p class="font-bold">WhatsApp & Call</p>
+                                <p class="text-slate-400">+91 99303 30051</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="clock"></i></div>
+                            <div>
+                                <p class="font-bold">Working Hours</p>
+                                <p class="text-slate-400">Open All Days (8:00 AM - 9:00 PM)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://wa.me/919930330051')" class="mt-12 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold flex items-center gap-3">
+                        <i data-lucide="message-circle" class="text-green-600"></i> Chat on WhatsApp
+                    </button>
                 </div>
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 scale-105 shadow-2xl">
-                    <div class="flex text-orange-400 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-slate-300 mb-6 italic">"The daycare facility is amazing. Clean, spacious, and the staff really knows how to handle dogs."</p>
-                    <div class="font-bold">Rahul Mehta</div>
-                </div>
-                <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700">
-                    <div class="flex text-orange-400 mb-4"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-                    <p class="text-slate-300 mb-6 italic">"Great selection of products in the shop. The organic treats are a hit with my cat."</p>
-                    <div class="font-bold">Sneha Gupta</div>
+                <div class="md:w-1/2 min-h-[400px]">
+                    <!-- Google Maps Embed for Tragad/Chandkheda (Generic) -->
+                    <iframe class="w-full h-full border-0 grayscale opacity-80" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14674.240755106263!2d72.5847355!3d23.1506509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e830f03108929%3A0xc3f95470d0a5146c!2sTragad%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1710000000000" 
+                        allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ADMIN PANEL -->
-    <section id="admin" class="py-24 bg-slate-50 border-t">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-200">
-                <h2 class="text-3xl font-bold mb-8 text-center text-slate-800">Store Management</h2>
+    <!-- REVIEWS -->
+    <section id="reviews" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold mb-16">Loved by Pet Parents</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"The best hostel in Ahmedabad. My dog didn't want to come back home!"</p>
+                    <p class="font-bold">- Priya S.</p>
+                </div>
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"Excellent selection of toys and food. The staff is very knowledgeable."</p>
+                    <p class="font-bold">- Rahul M.</p>
+                </div>
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"Very clean and hygienic. The CCTV access gave me so much peace of mind."</p>
+                    <p class="font-bold">- Sneha G.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <!-- LOGIN BOX -->
+    <!-- ADMIN -->
+    <section id="admin" class="py-24 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white p-10 rounded-[3rem] shadow-xl">
+                <h2 class="text-3xl font-bold mb-8 text-center">Admin Portal</h2>
+                
                 <div id="loginBox" class="max-w-sm mx-auto space-y-4">
-                    <div class="relative">
-                        <i data-lucide="mail" class="absolute left-4 top-4 w-5 h-5 text-slate-400"></i>
-                        <input id="adminEmail" placeholder="Email Address" class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
-                    </div>
-                    <div class="relative">
-                        <i data-lucide="lock" class="absolute left-4 top-4 w-5 h-5 text-slate-400"></i>
-                        <input id="adminPass" type="password" placeholder="Password" class="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
-                    </div>
-                    <button onclick="login()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-slate-800 transition">
-                        Authorize Access
-                    </button>
+                    <input id="adminEmail" placeholder="Email" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
+                    <input id="adminPass" type="password" placeholder="Password" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
+                    <button onclick="login()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold">Login</button>
+                    <p class="text-xs text-center text-slate-400">Managed by Summit Mishra</p>
                 </div>
 
-                <!-- ADMIN CONTROLS -->
                 <div id="adminPanel" style="display:none;" class="space-y-6">
                     <div class="grid md:grid-cols-3 gap-4">
-                        <input id="pName" placeholder="Product Name" class="p-4 bg-slate-50 border rounded-xl outline-none">
-                        <input id="pPrice" type="number" placeholder="Price (₹)" class="p-4 bg-slate-50 border rounded-xl outline-none">
-                        <input id="pImg" placeholder="Image URL" class="p-4 bg-slate-50 border rounded-xl outline-none">
+                        <input id="pName" placeholder="Name" class="p-4 border rounded-xl outline-none">
+                        <input id="pPrice" placeholder="Price" class="p-4 border rounded-xl outline-none">
+                        <input id="pImg" placeholder="Image URL" class="p-4 border rounded-xl outline-none">
                     </div>
-                    <button onclick="addProduct()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold hover:bg-green-700 transition">
-                        Add New Item to Inventory
-                    </button>
-                    
-                    <div class="mt-10">
-                        <h3 class="font-bold mb-4 text-slate-600 border-b pb-2">Active Products</h3>
-                        <div id="adminList" class="space-y-3"></div>
-                    </div>
+                    <button onclick="addProduct()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold">Add Product</button>
+                    <div id="adminList" class="mt-8 space-y-2"></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-white py-12 border-t text-center text-slate-400">
-        <p>&copy; 2024 Amdavadi Paws. Designed for the Love of Pets.</p>
+    <footer class="py-12 text-center text-slate-400 border-t">
+        <p>&copy; 2024 Amdavadi Paws. Location: Tragad, Chandkheda, Ahmedabad.</p>
     </footer>
 
     <!-- CART SIDEBAR -->
     <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-[400px] h-full bg-white z-[200] shadow-2xl transform translate-x-full">
         <div class="p-6 h-full flex flex-col">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold text-slate-900">Your Shopping Bag</h2>
-                <button onclick="toggleCart(false)" class="p-2 hover:bg-slate-100 rounded-full">
-                    <i data-lucide="x" class="w-6 h-6"></i>
-                </button>
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h2 class="text-2xl font-bold">My Cart</h2>
+                <button onclick="toggleCart(false)" class="p-2 hover:bg-slate-100 rounded-full"><i data-lucide="x"></i></button>
             </div>
-
-            <div id="cartItems" class="flex-grow overflow-y-auto custom-scrollbar space-y-4">
-                <!-- Cart items load here -->
-            </div>
-
+            <div id="cartItems" class="flex-grow overflow-y-auto custom-scrollbar space-y-4"></div>
             <div class="border-t pt-6 mt-6">
-                <div class="flex justify-between text-xl font-bold mb-6 text-slate-900">
-                    <span>Subtotal</span>
+                <div class="flex justify-between text-xl font-bold mb-6">
+                    <span>Total</span>
                     <span>₹<span id="total">0</span></span>
                 </div>
-                <button onclick="checkout()" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-lg hover:bg-orange-700 shadow-xl shadow-orange-100 transition">
-                    Secure Checkout
-                </button>
+                <button onclick="checkout()" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-lg">Checkout</button>
             </div>
         </div>
     </div>
 
-    <!-- BOOKING MODAL -->
+    <!-- BOOKING POPUP -->
     <div id="popup" style="display:none;" class="fixed top-0 left-0 w-full h-full bg-slate-900/60 backdrop-blur-sm z-[300] items-center justify-center p-4">
-        <div class="bg-white w-full max-w-md p-8 rounded-[2.5rem] relative shadow-2xl animate-in zoom-in-95 duration-200">
-            <button onclick="closeBooking()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">
-                <i data-lucide="x-circle" class="w-8 h-8"></i>
-            </button>
-
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i data-lucide="calendar" class="w-8 h-8"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-slate-900">Book a Stay</h2>
-                <p class="text-slate-500 text-sm">Fill in details and we'll chat on WhatsApp</p>
-            </div>
-
+        <div class="bg-white w-full max-w-md p-8 rounded-[2.5rem] relative animate-in zoom-in-95 duration-200">
+            <button onclick="closeBooking()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            <h2 class="text-2xl font-bold mb-6 text-center">Book a Stay</h2>
             <div class="space-y-4">
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-400">PET PARENT NAME</label>
-                    <input id="name" placeholder="E.g. Summit Mishra" class="w-full p-4 bg-slate-50 rounded-xl border border-slate-100 outline-none focus:ring-2 focus:ring-orange-500">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-400">PET'S NAME & BREED</label>
-                    <input id="pet" placeholder="E.g. Bruno (Golden Retriever)" class="w-full p-4 bg-slate-50 rounded-xl border border-slate-100 outline-none focus:ring-2 focus:ring-orange-500">
-                </div>
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-400">CHECK-IN DATE</label>
-                    <input id="date" type="date" class="w-full p-4 bg-slate-50 rounded-xl border border-slate-100 outline-none focus:ring-2 focus:ring-orange-500">
-                </div>
-                <button onclick="sendBooking()" class="w-full bg-orange-500 text-white py-5 rounded-2xl font-bold text-lg hover:bg-orange-600 mt-4 transition">
-                    Send via WhatsApp
-                </button>
+                <input id="name" placeholder="Your Name" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <input id="pet" placeholder="Pet Name & Breed" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <input id="date" type="date" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <button onclick="sendBooking()" class="w-full bg-orange-500 text-white py-5 rounded-2xl font-bold">Contact via WhatsApp</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- CONSTANTS ---
-        const RAZORPAY_KEY = "rzp_test_example"; // Replace with real key
-        const WHATSAPP_NUMBER = "919930330051";
+        // --- CONFIGURATION ---
+        const RAZORPAY_KEY = "rzp_test_YOUR_KEY_HERE"; // PASTE YOUR KEY HERE
         const ADMIN_EMAIL = "summitmishra2202@gmail.com";
         const ADMIN_PASS = "Lodha@2202";
+        const WHATSAPP = "919930330051";
 
         // --- DATA ---
-        let products = JSON.parse(localStorage.getItem("products")) || [
+        let products = JSON.parse(localStorage.getItem("products_v2")) || [
             { name: "Organic Kibble (Adult)", price: 2499, img: "https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400" },
-            { name: "Orthopedic Memory Foam Bed", price: 3499, img: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400" },
-            { name: "Plush Lion Squeaky Toy", price: 499, img: "https://images.unsplash.com/photo-1591768793355-74d7c504c55c?w=400" },
-            { name: "Leather Comfort Leash", price: 899, img: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=400" },
+            { name: "Orthopedic Memory Bed", price: 3499, img: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400" },
+            { name: "Plush Squeaky Toy", price: 499, img: "https://images.unsplash.com/photo-1591768793355-74d7c504c55c?w=400" },
+            { name: "Leather Leash", price: 899, img: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=400" },
             { name: "Cat Scratching Tower", price: 4200, img: "https://images.unsplash.com/photo-1591806336026-f825d72071a2?w=400" },
             { name: "Salmon Jerky Treats", price: 650, img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" },
             { name: "Safe-Grip Grooming Brush", price: 550, img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" },
             { name: "Self-Filling Water Bowl", price: 1200, img: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=400" },
             { name: "Puppy Starter Kit", price: 2999, img: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400" },
-            { name: "Feather Wand Cat Toy", price: 299, img: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400" },
-            { name: "Indie Dog Jacket", price: 999, img: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=400" },
-            { name: "Nutri-Boost Multivitamins", price: 1100, img: "https://images.unsplash.com/photo-1585499103174-566a24fd252b?w=400" },
-            { name: "Collapsible Travel Bowl", price: 350, img: "https://images.unsplash.com/photo-1604449641031-2fdec6e356ed?w=400" },
-            { name: "Reflective Harness (M)", price: 1499, img: "https://images.unsplash.com/photo-1544567403-1002221b2b8c?w=400" },
+            { name: "Feather Wand Toy", price: 299, img: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400" },
+            { name: "Winter Dog Jacket", price: 999, img: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=400" },
+            { name: "Nutri-Boost Vitamins", price: 1100, img: "https://images.unsplash.com/photo-1585499103174-566a24fd252b?w=400" },
+            { name: "Travel Bowl", price: 350, img: "https://images.unsplash.com/photo-1604449641031-2fdec6e356ed?w=400" },
+            { name: "Reflective Harness", price: 1499, img: "https://images.unsplash.com/photo-1544567403-1002221b2b8c?w=400" },
             { name: "Natural Flea Shampoo", price: 450, img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" },
-            { name: "Premium Tofu Cat Litter", price: 1299, img: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400" }
+            { name: "Premium Cat Litter", price: 1299, img: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400" }
         ];
 
         let cart = [];
 
-        // --- CORE FUNCTIONS ---
+        // --- RENDER SHOP ---
         function renderProducts() {
             const grid = document.getElementById("products");
             grid.innerHTML = products.map((p, i) => `
-                <div class="product-card group bg-white rounded-3xl p-4 border border-slate-100 shadow-sm hover:shadow-xl transition-all">
-                    <div class="overflow-hidden rounded-2xl mb-4">
-                        <img src="${p.img}" class="w-full aspect-square object-cover transition-transform duration-500">
-                    </div>
-                    <h3 class="font-bold text-slate-800 text-sm md:text-base mb-1 truncate">${p.name}</h3>
-                    <div class="flex justify-between items-center">
+                <div class="product-card group bg-white rounded-3xl p-4 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+                    <img src="${p.img}" class="w-full aspect-square object-cover rounded-2xl mb-4 transition duration-300">
+                    <h3 class="font-bold text-slate-800 truncate">${p.name}</h3>
+                    <div class="flex justify-between items-center mt-2">
                         <span class="font-black text-orange-600">₹${p.price}</span>
-                        <button onclick="addToCart(${i})" class="bg-slate-100 p-3 rounded-xl hover:bg-orange-600 hover:text-white transition group/btn">
+                        <button onclick="addToCart(${i})" class="bg-slate-100 p-3 rounded-xl hover:bg-orange-600 hover:text-white transition">
                             <i data-lucide="plus" class="w-5 h-5"></i>
                         </button>
                     </div>
@@ -341,6 +322,7 @@
             renderAdmin();
         }
 
+        // --- CART LOGIC ---
         function addToCart(i) {
             let found = cart.find(c => c.name === products[i].name);
             if (found) { found.qty++; }
@@ -351,23 +333,22 @@
 
         function updateCart() {
             let total = 0;
-            const cartDiv = document.getElementById("cartItems");
-            
-            cartDiv.innerHTML = cart.map((item, i) => {
+            const container = document.getElementById("cartItems");
+            container.innerHTML = cart.map((item, i) => {
                 total += item.price * item.qty;
                 return `
                 <div class="flex gap-4 bg-slate-50 p-4 rounded-2xl">
                     <img src="${item.img}" class="w-16 h-16 rounded-xl object-cover">
                     <div class="flex-grow">
                         <div class="flex justify-between">
-                            <h4 class="font-bold text-slate-800 text-sm">${item.name}</h4>
-                            <button onclick="removeItem(${i})" class="text-slate-400 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            <p class="font-bold text-sm">${item.name}</p>
+                            <button onclick="removeItem(${i})" class="text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                         </div>
                         <p class="text-orange-600 font-bold text-sm">₹${item.price}</p>
-                        <div class="flex items-center gap-3 mt-2">
-                            <button onclick="dec(${i})" class="w-6 h-6 bg-white border rounded flex items-center justify-center">-</button>
-                            <span class="text-xs font-bold">${item.qty}</span>
-                            <button onclick="inc(${i})" class="w-6 h-6 bg-white border rounded flex items-center justify-center">+</button>
+                        <div class="flex items-center gap-4 mt-2">
+                            <button onclick="changeQty(${i}, -1)" class="w-6 h-6 bg-white border rounded">-</button>
+                            <span class="text-sm font-bold">${item.qty}</span>
+                            <button onclick="changeQty(${i}, 1)" class="w-6 h-6 bg-white border rounded">+</button>
                         </div>
                     </div>
                 </div>`;
@@ -378,76 +359,80 @@
             lucide.createIcons();
         }
 
-        function inc(i) { cart[i].qty++; updateCart(); }
-        function dec(i) { if (cart[i].qty > 1) cart[i].qty--; updateCart(); }
-        function removeItem(i) { cart.splice(i, 1); updateCart(); }
-
-        function toggleCart(open) {
-            const side = document.getElementById("cart-sidebar");
-            side.style.transform = open ? "translateX(0)" : "translateX(100%)";
+        function changeQty(i, delta) {
+            cart[i].qty += delta;
+            if(cart[i].qty < 1) cart.splice(i, 1);
+            updateCart();
         }
+
+        function removeItem(i) { cart.splice(i, 1); updateCart(); }
+        function toggleCart(open) { document.getElementById("cart-sidebar").style.transform = open ? "translateX(0)" : "translateX(100%)"; }
 
         function checkout() {
             let total = cart.reduce((s, p) => s + p.price * p.qty, 0);
-            if(total === 0) return alert("Cart is empty");
+            if(total === 0) return;
 
-            // Simulation for environment
-            alert(`Redirecting to Razorpay Secure Payment for ₹${total}`);
-            setTimeout(() => {
-                alert("Payment Successful! Order Confirmed.");
-                cart = [];
-                updateCart();
-                toggleCart(false);
-            }, 1000);
+            const options = {
+                "key": RAZORPAY_KEY,
+                "amount": total * 100,
+                "currency": "INR",
+                "name": "Amdavadi Paws",
+                "description": "Pet Shop Order",
+                "handler": function(res) {
+                    alert("Payment Success! ID: " + res.razorpay_payment_id);
+                    cart = [];
+                    updateCart();
+                    toggleCart(false);
+                }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
         }
 
-        // --- BOOKING MODAL ---
+        // --- BOOKING LOGIC ---
         function openBooking() { document.getElementById("popup").style.display = "flex"; }
         function closeBooking() { document.getElementById("popup").style.display = "none"; }
-
         function sendBooking() {
             const n = document.getElementById("name").value;
             const p = document.getElementById("pet").value;
             const d = document.getElementById("date").value;
-            if(!n || !p || !d) return alert("Please fill all details");
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Hi Amdavadi Paws, I'd like to book for ${n}, Pet: ${p}, Date: ${d}`);
+            if(!n || !p || !d) return alert("Fill all details");
+            window.open(`https://wa.me/${WHATSAPP}?text=Booking Request:%0A- Name: ${n}%0A- Pet: ${p}%0A- Date: ${d}`);
             closeBooking();
         }
 
-        // --- ADMIN LOGIC ---
+        // --- ADMIN LOGIN ---
         function login() {
-            const email = document.getElementById("adminEmail").value;
-            const pass = document.getElementById("adminPass").value;
+            const email = document.getElementById("adminEmail").value.trim();
+            const pass = document.getElementById("adminPass").value.trim();
+
             if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
                 document.getElementById("loginBox").style.display = "none";
                 document.getElementById("adminPanel").style.display = "block";
                 renderAdmin();
             } else {
-                alert("Unauthorized Access Attempt");
+                alert("Incorrect Login Details. Please check Email/Password.");
             }
         }
 
         function addProduct() {
-            let name = document.getElementById("pName").value;
-            let price = parseInt(document.getElementById("pPrice").value);
-            let img = document.getElementById("pImg").value;
-
-            if(!name || !price || !img) return alert("Enter all details");
+            const name = document.getElementById("pName").value;
+            const price = parseInt(document.getElementById("pPrice").value);
+            const img = document.getElementById("pImg").value;
+            if(!name || isNaN(price) || !img) return alert("All fields required");
 
             products.unshift({ name, price, img });
-            localStorage.setItem("products", JSON.stringify(products));
+            localStorage.setItem("products_v2", JSON.stringify(products));
             renderProducts();
-            
-            // Clear inputs
             document.getElementById("pName").value = "";
             document.getElementById("pPrice").value = "";
             document.getElementById("pImg").value = "";
         }
 
         function deleteProduct(i) {
-            if(confirm("Delete this product from shop?")) {
+            if(confirm("Delete this item?")) {
                 products.splice(i, 1);
-                localStorage.setItem("products", JSON.stringify(products));
+                localStorage.setItem("products_v2", JSON.stringify(products));
                 renderProducts();
             }
         }
@@ -457,25 +442,18 @@
                 <div class="flex justify-between items-center bg-slate-50 p-4 rounded-xl border">
                     <div class="flex items-center gap-3">
                         <img src="${p.img}" class="w-10 h-10 rounded object-cover">
-                        <div>
-                            <p class="font-bold text-sm">${p.name}</p>
-                            <p class="text-xs text-orange-600 font-bold">₹${p.price}</p>
-                        </div>
+                        <span class="text-sm font-bold">${p.name} (₹${p.price})</span>
                     </div>
-                    <button onclick="deleteProduct(${i})" class="text-red-500 p-2 hover:bg-red-50 rounded-lg transition">
-                        <i data-lucide="trash-2" class="w-5 h-5"></i>
-                    </button>
+                    <button onclick="deleteProduct(${i})" class="text-red-500 p-2 hover:bg-red-50 rounded-lg"><i data-lucide="trash"></i></button>
                 </div>
             `).join("");
             lucide.createIcons();
         }
 
-        // --- INITIALIZE ---
         window.onload = () => {
             renderProducts();
             lucide.createIcons();
         };
-
     </script>
 </body>
 </html>
