@@ -1,367 +1,459 @@
-import React, { useState, useEffect } from 'react';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
-import { getFirestore, collection, doc, onSnapshot, addDoc, deleteDoc, query } from 'firebase/firestore';
-import { ShoppingCart, Dog, MapPin, Phone, Clock, MessageCircle, Plus, Trash2, X, XCircle, Calendar, ShieldCheck, LogIn } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amdavadi Paws | Luxury Pet Care & Shop Ahmedabad</title>
+    
+    <!-- External Scripts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            scroll-behavior: smooth;
+        }
 
-// --- CONFIGURATION ---
-const firebaseConfig = JSON.parse(__firebase_config);
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'amdavadi-paws-v1';
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
-const RAZORPAY_KEY = ""; // Add your Razorpay Key here
-const ADMIN_EMAIL = "summitmishra2202@gmail.com";
-const ADMIN_PASS = "Lodha@2202";
-const WHATSAPP_NUM = "919930330051";
+        #cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-export default function App() {
-  const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-  
-  // Admin Login State
-  const [emailInput, setEmailInput] = useState('');
-  const [passInput, setPassInput] = useState('');
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
 
-  // New Product Form
-  const [newPName, setNewPName] = useState('');
-  const [newPPrice, setNewPPrice] = useState('');
-  const [newPImg, setNewPImg] = useState('');
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
 
-  // 1. Initialize Auth
-  useEffect(() => {
-    const initAuth = async () => {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-        await signInWithCustomToken(auth, __initial_auth_token);
-      } else {
-        await signInAnonymously(auth);
-      }
-    };
-    initAuth();
-    const unsubscribe = onAuthStateChanged(auth, setUser);
-    return () => unsubscribe();
-  }, []);
-
-  // 2. Sync Products from Firestore (Global Data)
-  useEffect(() => {
-    if (!user) return;
-    const q = collection(db, 'artifacts', appId, 'public', 'data', 'products');
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const prods = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setProducts(prods);
-    }, (error) => console.error("Firestore Error:", error));
-    return () => unsubscribe();
-  }, [user]);
-
-  // Actions
-  const addToCart = (product) => {
-    const existing = cart.find(item => item.id === product.id);
-    if (existing) {
-      setCart(cart.map(item => item.id === product.id ? { ...item, qty: item.qty + 1 } : item));
-    } else {
-      setCart([...cart, { ...product, qty: 1 }]);
-    }
-    setIsCartOpen(true);
-  };
-
-  const removeFromCart = (id) => setCart(cart.filter(item => item.id !== id));
-  const updateQty = (id, delta) => {
-    setCart(cart.map(item => {
-      if (item.id === id) {
-        const newQty = item.qty + delta;
-        return newQty > 0 ? { ...item, qty: newQty } : item;
-      }
-      return item;
-    }));
-  };
-
-  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
-  const handleAdminLogin = () => {
-    if (emailInput.trim() === ADMIN_EMAIL && passInput.trim() === ADMIN_PASS) {
-      setIsAdminLoggedIn(true);
-    } else {
-      alert("Invalid Credentials");
-    }
-  };
-
-  const addNewProduct = async () => {
-    if (!newPName || !newPPrice || !newPImg) return alert("Please fill all fields");
-    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'products'), {
-      name: newPName,
-      price: Number(newPPrice),
-      img: newPImg,
-      createdAt: Date.now()
-    });
-    setNewPName(''); setNewPPrice(''); setNewPImg('');
-  };
-
-  const deleteProduct = async (id) => {
-    if (window.confirm("Delete this product?")) {
-      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'products', id));
-    }
-  };
-
-  const handleRazorpay = () => {
-    if (!RAZORPAY_KEY) return alert("Please integrate Razorpay Key in the code first.");
-    const options = {
-      key: RAZORPAY_KEY,
-      amount: total * 100,
-      currency: "INR",
-      name: "Amdavadi Paws",
-      handler: (res) => {
-        alert("Payment Success: " + res.razorpay_payment_id);
-        setCart([]);
-        setIsCartOpen(false);
-      }
-    };
-    const rzp = new window.Razorpay(options);
-    rzp.open();
-  };
-
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      {/* NAVBAR */}
-      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b z-50">
-        <div className="max-w-7xl mx-auto flex justify-between items-center p-4 px-6">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-            <div className="bg-orange-600 p-2 rounded-xl text-white"><Dog size={24} /></div>
-            <h1 className="font-bold text-2xl tracking-tighter">Amdavadi <span className="text-orange-600">Paws</span></h1>
-          </div>
-          <div className="hidden md:flex gap-8 font-semibold text-slate-500">
-            <a href="#hostel" className="hover:text-orange-600 transition">Hostel</a>
-            <a href="#shop" className="hover:text-orange-600 transition">Shop</a>
-            <a href="#contact" className="hover:text-orange-600 transition">Contact</a>
-            <a href="#admin" className="hover:text-orange-600 transition">Admin</a>
-          </div>
-          <button onClick={() => setIsCartOpen(true)} className="relative p-2 bg-slate-100 rounded-full hover:bg-orange-100 transition">
-            <ShoppingCart size={20} />
-            {cart.length > 0 && <span className="absolute -top-1 -right-1 bg-orange-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">{cart.length}</span>}
-          </button>
-        </div>
-      </nav>
-
-      {/* HERO */}
-      <header className="pt-32 pb-20 bg-white">
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <span className="inline-block bg-orange-100 text-orange-700 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4">📍 Tragad, Ahmedabad</span>
-            <h1 className="text-5xl md:text-7xl font-extrabold leading-tight mb-6">Luxury Care for <span className="text-orange-500">Happy Tails.</span></h1>
-            <p className="text-slate-600 text-lg mb-8 max-w-md">Ahmedabad's premier pet boarding and luxury shop. Because your pet deserves a vacation too.</p>
-            <button onClick={() => setIsBookingOpen(true)} className="bg-slate-900 text-white px-10 py-4 rounded-2xl font-bold shadow-xl shadow-slate-200 hover:scale-105 transition active:scale-95 flex items-center gap-2">
-              <Calendar size={20} /> Book a Stay
-            </button>
-          </div>
-          <div className="relative">
-             <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=800" className="rounded-[3rem] shadow-2xl border-8 border-slate-50" alt="Happy Dog" />
-             <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border">
-                <div className="bg-green-100 p-2 rounded-full text-green-600"><ShieldCheck size={24} /></div>
-                <div><p className="text-xs text-slate-400">Trusted By</p><p className="font-bold text-sm">500+ Pet Parents</p></div>
-             </div>
-          </div>
-        </div>
-      </header>
-
-      {/* SHOP SECTION */}
-      <section id="shop" className="py-24 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-4xl font-bold mb-2">The Paws Shop</h2>
-              <p className="text-slate-500">Curated premium supplies for your best friend.</p>
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 w-full glass-nav border-b border-slate-200 z-[100]">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-4 md:px-8">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <div class="bg-orange-500 p-2 rounded-xl text-white">
+                    <i data-lucide="dog" class="w-6 h-6"></i>
+                </div>
+                <h1 class="font-bold text-2xl tracking-tight text-slate-800">Amdavadi <span class="text-orange-600">Paws</span></h1>
             </div>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.length === 0 ? (
-                <div className="col-span-full text-center py-20 text-slate-400">Adding products to the shop...</div>
-            ) : products.map(product => (
-              <div key={product.id} className="bg-white p-4 rounded-[2rem] border border-slate-100 hover:shadow-xl transition-all group">
-                <div className="overflow-hidden rounded-2xl mb-4">
-                  <img src={product.img} className="w-full aspect-square object-cover group-hover:scale-110 transition duration-500" alt={product.name} />
-                </div>
-                <h3 className="font-bold text-slate-800 mb-1 truncate">{product.name}</h3>
-                <div className="flex justify-between items-center">
-                  <span className="font-black text-orange-600">₹{product.price}</span>
-                  <button onClick={() => addToCart(product)} className="bg-slate-900 text-white p-3 rounded-xl hover:bg-orange-600 transition">
-                    <Plus size={18} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* CONTACT SECTION */}
-      <section id="contact" className="py-24 bg-slate-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-slate-900 rounded-[4rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
-            <div className="md:w-1/2 p-12 lg:p-20 text-white">
-              <h2 className="text-4xl font-bold mb-10">Visit Our Store</h2>
-              <div className="space-y-8">
-                <div className="flex gap-4">
-                  <div className="bg-white/10 p-3 rounded-2xl text-orange-400"><MapPin /></div>
-                  <div><p className="font-bold">Address</p><p className="text-slate-400">Tragad, Chandkheda, Ahmedabad, Gujarat</p></div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="bg-white/10 p-3 rounded-2xl text-orange-400"><Phone /></div>
-                  <div><p className="font-bold">WhatsApp & Call</p><p className="text-slate-400">+91 99303 30051</p></div>
-                </div>
-                <div className="flex gap-4">
-                  <div className="bg-white/10 p-3 rounded-2xl text-orange-400"><Clock /></div>
-                  <div><p className="font-bold">Open Hours</p><p className="text-slate-400">All Days: 8:00 AM - 9:00 PM</p></div>
-                </div>
-              </div>
-              <button 
-                onClick={() => window.open(`https://wa.me/${WHATSAPP_NUM}`)}
-                className="mt-12 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold flex items-center gap-3 hover:bg-orange-50 transition"
-              >
-                <MessageCircle className="text-green-600" /> Chat with Us
-              </button>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600">
+                <a href="#hostel" class="hover:text-orange-600 transition">Hostel</a>
+                <a href="#shop" class="hover:text-orange-600 transition">Shop</a>
+                <a href="#contact" class="hover:text-orange-600 transition">Contact</a>
+                <a href="#admin" class="hover:text-orange-600 transition">Admin</a>
             </div>
-            <div className="md:w-1/2 h-[400px] md:h-auto">
-               <iframe className="w-full h-full border-0 grayscale opacity-80" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14674.240755106263!2d72.5847355!3d23.1506509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e830f03108929%3A0xc3f95470d0a5146c!2sTragad%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1710000000000" allowFullScreen loading="lazy"></iframe>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ADMIN SECTION */}
-      <section id="admin" className="py-24 bg-white border-t">
-        <div className="max-w-2xl mx-auto px-6">
-            <div className="bg-slate-50 p-10 rounded-[3rem] border border-slate-200">
-                <h2 className="text-3xl font-bold mb-8 text-center flex items-center justify-center gap-2">
-                    <LogIn /> Admin Portal
-                </h2>
-                
-                {!isAdminLoggedIn ? (
-                    <div className="space-y-4">
-                        <input value={emailInput} onChange={e => setEmailInput(e.target.value)} placeholder="Email" className="w-full p-4 rounded-2xl border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-orange-500 outline-none transition" />
-                        <input type="password" value={passInput} onChange={e => setPassInput(e.target.value)} placeholder="Password" className="w-full p-4 rounded-2xl border-none ring-1 ring-slate-200 focus:ring-2 focus:ring-orange-500 outline-none transition" />
-                        <button onClick={handleAdminLogin} className="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold shadow-lg">Enter Dashboard</button>
-                    </div>
-                ) : (
-                    <div className="space-y-6">
-                        <div className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
-                            <h3 className="font-bold">Add New Product</h3>
-                            <input value={newPName} onChange={e => setNewPName(e.target.value)} placeholder="Product Name" className="w-full p-3 bg-slate-50 rounded-xl border-none ring-1 ring-slate-200 focus:ring-orange-500 focus:ring-2 outline-none" />
-                            <input value={newPPrice} onChange={e => setNewPPrice(e.target.value)} type="number" placeholder="Price (₹)" className="w-full p-3 bg-slate-50 rounded-xl border-none ring-1 ring-slate-200 focus:ring-orange-500 focus:ring-2 outline-none" />
-                            <input value={newPImg} onChange={e => setNewPImg(e.target.value)} placeholder="Image URL (Unsplash/Direct Link)" className="w-full p-3 bg-slate-50 rounded-xl border-none ring-1 ring-slate-200 focus:ring-orange-500 focus:ring-2 outline-none" />
-                            <button onClick={addNewProduct} className="w-full bg-green-600 text-white py-4 rounded-xl font-bold">Post to Website</button>
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <h3 className="font-bold px-2">Manage Live Products ({products.length})</h3>
-                            {products.map(p => (
-                                <div key={p.id} className="flex justify-between items-center bg-white p-3 rounded-xl border border-slate-100">
-                                    <div className="flex items-center gap-3">
-                                        <img src={p.img} className="w-10 h-10 rounded-lg object-cover" />
-                                        <span className="text-sm font-semibold">{p.name} (₹{p.price})</span>
-                                    </div>
-                                    <button onClick={() => deleteProduct(p.id)} className="text-red-500 p-2 hover:bg-red-50 rounded-lg"><Trash2 size={16} /></button>
-                                </div>
-                            ))}
-                        </div>
-                        <button onClick={() => setIsAdminLoggedIn(false)} className="text-slate-400 text-sm hover:underline">Logout</button>
-                    </div>
-                )}
-            </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="py-12 text-center text-slate-400 border-t bg-white">
-        <p className="text-sm font-medium">© 2024 Amdavadi Paws. Serving Tragad & Chandkheda, Ahmedabad.</p>
-        <div className="mt-2 flex justify-center gap-4 text-xs">
-            <span>nearme24.in</span>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-        </div>
-      </footer>
-
-      {/* CART DRAWER */}
-      {isCartOpen && (
-        <div className="fixed inset-0 z-[100]">
-          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsCartOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-full md:w-[450px] bg-white shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
-            <div className="p-6 flex justify-between items-center border-b">
-              <h2 className="text-2xl font-bold">Your Cart</h2>
-              <button onClick={() => setIsCartOpen(false)} className="p-2 hover:bg-slate-100 rounded-full"><X /></button>
-            </div>
-            <div className="flex-grow overflow-y-auto p-6 space-y-4">
-              {cart.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                  <ShoppingCart size={48} className="mb-4 opacity-20" />
-                  <p>Your cart is empty</p>
-                </div>
-              ) : cart.map(item => (
-                <div key={item.id} className="flex gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                  <img src={item.img} className="w-20 h-20 rounded-xl object-cover" alt={item.name} />
-                  <div className="flex-grow">
-                    <div className="flex justify-between items-start mb-1">
-                      <h4 className="font-bold text-sm">{item.name}</h4>
-                      <button onClick={() => removeFromCart(item.id)} className="text-slate-300 hover:text-red-500"><X size={16} /></button>
-                    </div>
-                    <p className="text-orange-600 font-bold mb-3 text-sm">₹{item.price}</p>
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center bg-white border rounded-lg overflow-hidden">
-                        <button onClick={() => updateQty(item.id, -1)} className="px-3 py-1 hover:bg-slate-50">-</button>
-                        <span className="px-3 font-bold text-sm">{item.qty}</span>
-                        <button onClick={() => updateQty(item.id, 1)} className="px-3 py-1 hover:bg-slate-50">+</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {cart.length > 0 && (
-              <div className="p-8 border-t bg-slate-50 rounded-t-[3rem]">
-                <div className="flex justify-between text-2xl font-black mb-6">
-                  <span>Total</span>
-                  <span className="text-orange-600">₹{total}</span>
-                </div>
-                <button onClick={handleRazorpay} className="w-full bg-slate-900 text-white py-5 rounded-2xl font-bold text-lg hover:bg-orange-600 transition shadow-xl">
-                  Pay with Razorpay
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart(true)" class="relative p-2 bg-slate-100 rounded-full hover:bg-orange-50 transition">
+                    <i data-lucide="shopping-bag" class="w-6 h-6 text-slate-700"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-orange-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
                 </button>
-              </div>
-            )}
-          </div>
+            </div>
         </div>
-      )}
+    </nav>
 
-      {/* BOOKING MODAL */}
-      {isBookingOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setIsBookingOpen(false)} />
-            <div className="bg-white w-full max-w-md p-8 rounded-[3rem] relative shadow-2xl animate-in zoom-in-95">
-                <button onClick={() => setIsBookingOpen(false)} className="absolute top-6 right-6 text-slate-300 hover:text-slate-900"><XCircle size={32} /></button>
-                <h2 className="text-3xl font-bold mb-2">Book a Stay</h2>
-                <p className="text-slate-500 mb-8">Tell us about your pet's needs.</p>
-                <div className="space-y-4">
-                    <input id="bName" placeholder="Your Full Name" className="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 border-none" />
-                    <input id="bPet" placeholder="Pet Type & Breed" className="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 border-none" />
-                    <input id="bDate" type="date" className="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-orange-500 border-none" />
-                    <button 
-                      onClick={() => {
-                        const n = document.getElementById('bName').value;
-                        const p = document.getElementById('bPet').value;
-                        const d = document.getElementById('bDate').value;
-                        window.open(`https://wa.me/${WHATSAPP_NUM}?text=Hostel Booking Request:%0A- Name: ${n}%0A- Pet: ${p}%0A- Date: ${d}`);
-                        setIsBookingOpen(false);
-                      }}
-                      className="w-full bg-orange-600 text-white py-5 rounded-2xl font-bold text-lg shadow-xl shadow-orange-100"
-                    >
-                        Request via WhatsApp
+    <!-- HERO SECTION -->
+    <section class="relative pt-32 pb-20 overflow-hidden bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="z-10">
+                <span class="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-700 text-sm font-bold mb-4">📍 Tragad, Chandkheda, Ahmedabad</span>
+                <h1 class="text-6xl font-extrabold leading-[1.1] text-slate-900 mb-6">
+                    Luxury Stay for Your <span class="text-orange-500 italic">Best Friend.</span>
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 max-w-md">
+                    Ahmedabad's finest daycare & pet shop. We treat every guest like our own family.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="openBooking()" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-800 transition shadow-xl shadow-slate-200 flex items-center gap-2">
+                        <i data-lucide="calendar"></i> Book a Stay
                     </button>
                 </div>
             </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=1000" class="relative rounded-[3rem] shadow-2xl z-10 border-8 border-white">
+                <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl z-20 border border-slate-100 hidden sm:block">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-green-100 p-2 rounded-full text-green-600"><i data-lucide="shield-check"></i></div>
+                        <div>
+                            <p class="font-bold text-sm">Certified Care</p>
+                            <p class="text-xs text-slate-500">24/7 CCTV Monitoring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      )}
+    </section>
+
+    <!-- HOSTEL SECTION -->
+    <section id="hostel" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-extrabold text-slate-900 mb-4">Boarding & Daycare</h2>
+                <p class="text-slate-500">Professional care while you're away.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100">
+                    <img src="https://images.unsplash.com/photo-1601758228041-f3b279ce7bec?w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">Daycare</h3>
+                        <p class="text-slate-500 mb-6">Socializing, exercise, and basic grooming from 8 AM to 8 PM.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-black text-slate-900">₹399<span class="text-sm text-slate-400 font-normal">/day</span></span>
+                            <button onclick="openBooking()" class="bg-teal-600 text-white px-6 py-3 rounded-xl font-bold">Book</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-slate-100">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=800" class="w-full h-64 object-cover">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-2">Overnight Stay</h3>
+                        <p class="text-slate-500 mb-6">Personalized meal plans and cozy private sleeping areas.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl font-black text-slate-900">₹799<span class="text-sm text-slate-400 font-normal">/night</span></span>
+                            <button onclick="openBooking()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOP SECTION -->
+    <section id="shop" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-extrabold text-slate-900 mb-12">The Paws Shop</h2>
+            <div id="products" class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Products dynamically loaded -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-12 text-white">
+                    <h2 class="text-4xl font-bold mb-8">Visit Our Store</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="map-pin"></i></div>
+                            <div>
+                                <p class="font-bold">Our Location</p>
+                                <p class="text-slate-400">Tragad, Chandkheda, Ahmedabad, Gujarat</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="phone"></i></div>
+                            <div>
+                                <p class="font-bold">WhatsApp & Call</p>
+                                <p class="text-slate-400">+91 99303 30051</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="bg-slate-800 p-3 rounded-2xl text-orange-500"><i data-lucide="clock"></i></div>
+                            <div>
+                                <p class="font-bold">Working Hours</p>
+                                <p class="text-slate-400">Open All Days (8:00 AM - 9:00 PM)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://wa.me/919930330051')" class="mt-12 bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold flex items-center gap-3">
+                        <i data-lucide="message-circle" class="text-green-600"></i> Chat on WhatsApp
+                    </button>
+                </div>
+                <div class="md:w-1/2 min-h-[400px]">
+                    <!-- Google Maps Embed for Tragad/Chandkheda (Generic) -->
+                    <iframe class="w-full h-full border-0 grayscale opacity-80" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14674.240755106263!2d72.5847355!3d23.1506509!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e830f03108929%3A0xc3f95470d0a5146c!2sTragad%2C%20Ahmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1710000000000" 
+                        allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold mb-16">Loved by Pet Parents</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"The best hostel in Ahmedabad. My dog didn't want to come back home!"</p>
+                    <p class="font-bold">- Priya S.</p>
+                </div>
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"Excellent selection of toys and food. The staff is very knowledgeable."</p>
+                    <p class="font-bold">- Rahul M.</p>
+                </div>
+                <div class="p-8 bg-slate-50 rounded-3xl">
+                    <p class="text-slate-600 mb-6 italic">"Very clean and hygienic. The CCTV access gave me so much peace of mind."</p>
+                    <p class="font-bold">- Sneha G.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="admin" class="py-24 bg-slate-100">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white p-10 rounded-[3rem] shadow-xl">
+                <h2 class="text-3xl font-bold mb-8 text-center">Admin Portal</h2>
+                
+                <div id="loginBox" class="max-w-sm mx-auto space-y-4">
+                    <input id="adminEmail" placeholder="Email" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
+                    <input id="adminPass" type="password" placeholder="Password" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-orange-500">
+                    <button onclick="login()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold">Login</button>
+                    <p class="text-xs text-center text-slate-400">Managed by Summit Mishra</p>
+                </div>
+
+                <div id="adminPanel" style="display:none;" class="space-y-6">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <input id="pName" placeholder="Name" class="p-4 border rounded-xl outline-none">
+                        <input id="pPrice" placeholder="Price" class="p-4 border rounded-xl outline-none">
+                        <input id="pImg" placeholder="Image URL" class="p-4 border rounded-xl outline-none">
+                    </div>
+                    <button onclick="addProduct()" class="w-full bg-green-600 text-white py-4 rounded-xl font-bold">Add Product</button>
+                    <div id="adminList" class="mt-8 space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 text-center text-slate-400 border-t">
+        <p>&copy; 2024 Amdavadi Paws. Location: Tragad, Chandkheda, Ahmedabad.</p>
+    </footer>
+
+    <!-- CART SIDEBAR -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-[400px] h-full bg-white z-[200] shadow-2xl transform translate-x-full">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-8 border-b pb-4">
+                <h2 class="text-2xl font-bold">My Cart</h2>
+                <button onclick="toggleCart(false)" class="p-2 hover:bg-slate-100 rounded-full"><i data-lucide="x"></i></button>
+            </div>
+            <div id="cartItems" class="flex-grow overflow-y-auto custom-scrollbar space-y-4"></div>
+            <div class="border-t pt-6 mt-6">
+                <div class="flex justify-between text-xl font-bold mb-6">
+                    <span>Total</span>
+                    <span>₹<span id="total">0</span></span>
+                </div>
+                <button onclick="checkout()" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-lg">Checkout</button>
+            </div>
+        </div>
     </div>
-  );
-}
+
+    <!-- BOOKING POPUP -->
+    <div id="popup" style="display:none;" class="fixed top-0 left-0 w-full h-full bg-slate-900/60 backdrop-blur-sm z-[300] items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md p-8 rounded-[2.5rem] relative animate-in zoom-in-95 duration-200">
+            <button onclick="closeBooking()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900"><i data-lucide="x-circle" class="w-8 h-8"></i></button>
+            <h2 class="text-2xl font-bold mb-6 text-center">Book a Stay</h2>
+            <div class="space-y-4">
+                <input id="name" placeholder="Your Name" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <input id="pet" placeholder="Pet Name & Breed" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <input id="date" type="date" class="w-full p-4 bg-slate-50 rounded-xl border outline-none">
+                <button onclick="sendBooking()" class="w-full bg-orange-500 text-white py-5 rounded-2xl font-bold">Contact via WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const RAZORPAY_KEY = "rzp_test_SRqlvR52ecD25D"; 
+        const ADMIN_EMAIL = "summitmishra2202@gmail.com";
+        const ADMIN_PASS = "Lodha@2202";
+        const WHATSAPP = "919930330051";
+
+        // --- DATA ---
+        let products = JSON.parse(localStorage.getItem("products_v2")) || [
+            { name: "Organic Kibble (Adult)", price: 2499, img: "https://images.unsplash.com/photo-1589924691995-400dc9ceb709?w=400" },
+            { name: "Orthopedic Memory Bed", price: 3499, img: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400" },
+            { name: "Plush Squeaky Toy", price: 499, img: "https://images.unsplash.com/photo-1591768793355-74d7c504c55c?w=400" },
+            { name: "Leather Leash", price: 899, img: "https://images.unsplash.com/photo-1544568100-847a948585b9?w=400" },
+            { name: "Cat Scratching Tower", price: 4200, img: "https://images.unsplash.com/photo-1591806336026-f825d72071a2?w=400" },
+            { name: "Salmon Jerky Treats", price: 650, img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400" },
+            { name: "Safe-Grip Grooming Brush", price: 550, img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" },
+            { name: "Self-Filling Water Bowl", price: 1200, img: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?w=400" },
+            { name: "Puppy Starter Kit", price: 2999, img: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400" },
+            { name: "Feather Wand Toy", price: 299, img: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=400" },
+            { name: "Winter Dog Jacket", price: 999, img: "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=400" },
+            { name: "Nutri-Boost Vitamins", price: 1100, img: "https://images.unsplash.com/photo-1585499103174-566a24fd252b?w=400" },
+            { name: "Travel Bowl", price: 350, img: "https://images.unsplash.com/photo-1604449641031-2fdec6e356ed?w=400" },
+            { name: "Reflective Harness", price: 1499, img: "https://images.unsplash.com/photo-1544567403-1002221b2b8c?w=400" },
+            { name: "Natural Flea Shampoo", price: 450, img: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?w=400" },
+            { name: "Premium Cat Litter", price: 1299, img: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=400" }
+        ];
+
+        let cart = [];
+
+        // --- RENDER SHOP ---
+        function renderProducts() {
+            const grid = document.getElementById("products");
+            grid.innerHTML = products.map((p, i) => `
+                <div class="product-card group bg-white rounded-3xl p-4 border border-slate-100 shadow-sm hover:shadow-lg transition-all">
+                    <img src="${p.img}" class="w-full aspect-square object-cover rounded-2xl mb-4 transition duration-300">
+                    <h3 class="font-bold text-slate-800 truncate">${p.name}</h3>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="font-black text-orange-600">₹${p.price}</span>
+                        <button onclick="addToCart(${i})" class="bg-slate-100 p-3 rounded-xl hover:bg-orange-600 hover:text-white transition">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join("");
+            lucide.createIcons();
+            renderAdmin();
+        }
+
+        // --- CART LOGIC ---
+        function addToCart(i) {
+            let found = cart.find(c => c.name === products[i].name);
+            if (found) { found.qty++; }
+            else { cart.push({ ...products[i], qty: 1 }); }
+            updateCart();
+            toggleCart(true);
+        }
+
+        function updateCart() {
+            let total = 0;
+            const container = document.getElementById("cartItems");
+            container.innerHTML = cart.map((item, i) => {
+                total += item.price * item.qty;
+                return `
+                <div class="flex gap-4 bg-slate-50 p-4 rounded-2xl">
+                    <img src="${item.img}" class="w-16 h-16 rounded-xl object-cover">
+                    <div class="flex-grow">
+                        <div class="flex justify-between">
+                            <p class="font-bold text-sm">${item.name}</p>
+                            <button onclick="removeItem(${i})" class="text-red-400"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                        <p class="text-orange-600 font-bold text-sm">₹${item.price}</p>
+                        <div class="flex items-center gap-4 mt-2">
+                            <button onclick="changeQty(${i}, -1)" class="w-6 h-6 bg-white border rounded">-</button>
+                            <span class="text-sm font-bold">${item.qty}</span>
+                            <button onclick="changeQty(${i}, 1)" class="w-6 h-6 bg-white border rounded">+</button>
+                        </div>
+                    </div>
+                </div>`;
+            }).join("");
+
+            document.getElementById("total").innerText = total;
+            document.getElementById("cartCount").innerText = cart.length;
+            lucide.createIcons();
+        }
+
+        function changeQty(i, delta) {
+            cart[i].qty += delta;
+            if(cart[i].qty < 1) cart.splice(i, 1);
+            updateCart();
+        }
+
+        function removeItem(i) { cart.splice(i, 1); updateCart(); }
+        function toggleCart(open) { document.getElementById("cart-sidebar").style.transform = open ? "translateX(0)" : "translateX(100%)"; }
+
+        function checkout() {
+            let total = cart.reduce((s, p) => s + p.price * p.qty, 0);
+            if(total === 0) return;
+
+            const options = {
+                "key": RAZORPAY_KEY,
+                "amount": total * 100,
+                "currency": "INR",
+                "name": "Amdavadi Paws",
+                "description": "Pet Shop Order",
+                "handler": function(res) {
+                    alert("Payment Success! ID: " + res.razorpay_payment_id);
+                    cart = [];
+                    updateCart();
+                    toggleCart(false);
+                }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        // --- BOOKING LOGIC ---
+        function openBooking() { document.getElementById("popup").style.display = "flex"; }
+        function closeBooking() { document.getElementById("popup").style.display = "none"; }
+        function sendBooking() {
+            const n = document.getElementById("name").value;
+            const p = document.getElementById("pet").value;
+            const d = document.getElementById("date").value;
+            if(!n || !p || !d) return alert("Fill all details");
+            window.open(`https://wa.me/${WHATSAPP}?text=Booking Request:%0A- Name: ${n}%0A- Pet: ${p}%0A- Date: ${d}`);
+            closeBooking();
+        }
+
+        // --- ADMIN LOGIN ---
+        function login() {
+            const email = document.getElementById("adminEmail").value.trim();
+            const pass = document.getElementById("adminPass").value.trim();
+
+            if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+                document.getElementById("loginBox").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                renderAdmin();
+            } else {
+                alert("Incorrect Login Details. Please check Email/Password.");
+            }
+        }
+
+        function addProduct() {
+            const name = document.getElementById("pName").value;
+            const price = parseInt(document.getElementById("pPrice").value);
+            const img = document.getElementById("pImg").value;
+            if(!name || isNaN(price) || !img) return alert("All fields required");
+
+            products.unshift({ name, price, img });
+            localStorage.setItem("products_v2", JSON.stringify(products));
+            renderProducts();
+            document.getElementById("pName").value = "";
+            document.getElementById("pPrice").value = "";
+            document.getElementById("pImg").value = "";
+        }
+
+        function deleteProduct(i) {
+            if(confirm("Delete this item?")) {
+                products.splice(i, 1);
+                localStorage.setItem("products_v2", JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function renderAdmin() {
+            document.getElementById("adminList").innerHTML = products.map((p, i) => `
+                <div class="flex justify-between items-center bg-slate-50 p-4 rounded-xl border">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.img}" class="w-10 h-10 rounded object-cover">
+                        <span class="text-sm font-bold">${p.name} (₹${p.price})</span>
+                    </div>
+                    <button onclick="deleteProduct(${i})" class="text-red-500 p-2 hover:bg-red-50 rounded-lg"><i data-lucide="trash"></i></button>
+                </div>
+            `).join("");
+            lucide.createIcons();
+        }
+
+        window.onload = () => {
+            renderProducts();
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
